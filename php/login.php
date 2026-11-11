@@ -13,14 +13,11 @@ session_start();
 <link rel="stylesheet" href="../css/global.css">
 <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
-<div class="element-login-reporlog">
+<body class="element-login-reporlog">
+
 <header class="cabealho-reporlog" aria-label="Cabeçalho do Reporlog">
-<div
-        class="logo-reporlog"
-        role="img"
-        aria-label="Logotipo Reporlog"
-      ></div>
+<img src="../assets/images/logo-reportlog.png" alt="Logotipo Reporlog" class="logo-reporlog">
+<p class="logo-text">Reporlog</p>
 <p class="text-wrapper">Jogue | Evolua | Conquiste.</p>
 <p class="div">PORTAL DO JOGO</p>
 <div class="divisor" aria-hidden="true"></div>
@@ -72,6 +69,6 @@ Esqueci minha senha
 Reporlog&nbsp;&nbsp;·&nbsp;&nbsp;Jogo de vôlei em pixel art
       </footer>
 </form>
-</div>
+
 </body>
 </html>

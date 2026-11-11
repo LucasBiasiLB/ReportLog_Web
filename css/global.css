@@ -40,3 +40,8 @@ a {
   font-family: "Inter-SemiBold";
   src: local("Inter-SemiBold");
 }
+
+@font-face {
+    font-family: "Logo";
+    src: url("../assets/fonts/ThirstyCaps.ttf");
+}
