@@ -1,0 +1,343 @@
+.element-login-reporlog {
+  background-color: #050f1b;
+  width: 100%;
+  min-width: 1440px;
+  min-height: 960px;
+  display: flex;
+  flex-direction: column;
+}
+
+.element-login-reporlog .cabealho-reporlog {
+  width: 1440px;
+  height: 150px;
+  position: relative;
+}
+
+.element-login-reporlog .logo-reporlog {
+  position: absolute;
+  top: 35px;
+  left: 48px;
+  width: 174px;
+  height: 60px;
+  background-image: url(./img/logo-reporlog.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.element-login-reporlog .text-wrapper {
+  position: absolute;
+  top: 61px;
+  left: 248px;
+  width: 550px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a0a9b4;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 18.9px;
+}
+
+.element-login-reporlog .div {
+  position: absolute;
+  top: 61px;
+  left: 1152px;
+  width: 240px;
+  font-family: "Inter-Medium", Helvetica;
+  font-weight: 500;
+  color: #6acbf5;
+  font-size: 11px;
+  text-align: right;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.element-login-reporlog .divisor {
+  position: absolute;
+  top: 125px;
+  left: 48px;
+  width: 1344px;
+  height: 1px;
+  background-color: #185374;
+}
+
+.element-login-reporlog .formulrio-de-acesso {
+  width: 1440px;
+  height: 810px;
+  display: flex;
+  flex-direction: column;
+}
+
+.element-login-reporlog .text-wrapper-2 {
+  margin-left: 460px;
+  width: 520px;
+  height: 55px;
+  margin-top: 35px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #f5f6fa;
+  font-size: 38px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 55.1px;
+}
+
+.element-login-reporlog .p {
+  margin-left: 460px;
+  width: 520px;
+  height: 22px;
+  margin-top: 15px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a0a9b4;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 21.8px;
+}
+
+.element-login-reporlog .text-wrapper-3 {
+  margin-left: 460px;
+  width: 520px;
+  height: 19px;
+  margin-top: 53px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #6acbf5;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 18.9px;
+}
+
+.element-login-reporlog .div-wrapper {
+  margin-left: 460px;
+  width: 520px;
+  height: 56px;
+  margin-top: 8px;
+  display: flex;
+  background-color: #081c2c;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: #185374;
+}
+
+.element-login-reporlog .text-wrapper-4 {
+  margin-top: 17px;
+  width: 480px;
+  height: 22px;
+  margin-left: 18px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a0a9b4;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 21.8px;
+}
+
+.element-login-reporlog .text-wrapper-5 {
+  margin-left: 460px;
+  width: 520px;
+  height: 19px;
+  margin-top: 22px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #6acbf5;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 18.9px;
+}
+
+.element-login-reporlog .entrar {
+  margin-left: 460px;
+  width: 520px;
+  height: 54px;
+  margin-top: 44px;
+  display: flex;
+  background-color: #108fd1;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.element-login-reporlog .text-wrapper-6 {
+  margin-top: 15px;
+  width: 484px;
+  height: 23px;
+  margin-left: 18px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #f5f6fa;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 23.2px;
+}
+
+.element-login-reporlog .text-wrapper-7 {
+  margin-left: 460px;
+  width: 520px;
+  height: 22px;
+  margin-top: 28px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a0a9b4;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 21.8px;
+}
+
+.element-login-reporlog .criar-conta {
+  margin-left: 570px;
+  width: 300px;
+  height: 54px;
+  margin-top: 47px;
+  display: flex;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: #f5f6fa;
+}
+
+.element-login-reporlog .text-wrapper-8 {
+  margin-top: 15px;
+  width: 264px;
+  height: 23px;
+  margin-left: 18px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #f5f6fa;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 23.2px;
+}
+
+.element-login-reporlog .reporlog-jogo-de-v {
+  margin-left: 460px;
+  width: 520px;
+  height: 16px;
+  margin-top: 139px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a0a9b4;
+  font-size: 11px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+.element-login-reporlog .text-wrapper-4 {
+  display: block;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  appearance: none;
+}
+
+.element-login-reporlog .text-wrapper-4::placeholder {
+  color: #a0a9b4;
+  opacity: 1;
+}
+
+.element-login-reporlog .text-wrapper-4:focus {
+  color: #f5f6fa;
+}
+
+.element-login-reporlog .entrar {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.element-login-reporlog .entrar:hover {
+  background-color: #1599dd;
+}
+
+.element-login-reporlog .entrar:active {
+  background-color: #0d7fba;
+}
+
+.element-login-reporlog .entrar:focus-visible,
+.element-login-reporlog .text-wrapper-4:focus-visible,
+.element-login-reporlog .text-wrapper-7:focus-visible,
+.element-login-reporlog .criar-conta:focus-visible {
+  outline: 2px solid #f5f6fa;
+  outline-offset: 3px;
+}
+
+.element-login-reporlog .text-wrapper-7,
+.element-login-reporlog .criar-conta {
+  cursor: pointer;
+}
+
+.element-login-reporlog .text-wrapper-7:hover {
+  color: #f5f6fa;
+}
+
+.element-login-reporlog .criar-conta:hover {
+  background-color: rgba(245, 246, 250, 0.08);
+}
+
+@media (max-width: 767px) {
+  .element-login-reporlog {
+    min-width: 0;
+    min-height: 100vh;
+  }
+
+  .element-login-reporlog .cabealho-reporlog,
+  .element-login-reporlog .formulrio-de-acesso {
+    width: 100%;
+  }
+
+  .element-login-reporlog .logo-reporlog {
+    left: 24px;
+  }
+
+  .element-login-reporlog .text-wrapper {
+    left: 224px;
+    width: calc(100% - 248px);
+  }
+
+  .element-login-reporlog .div {
+    right: 24px;
+    left: auto;
+    width: auto;
+  }
+
+  .element-login-reporlog .divisor {
+    left: 24px;
+    width: calc(100% - 48px);
+  }
+
+  .element-login-reporlog .text-wrapper-2,
+  .element-login-reporlog .p,
+  .element-login-reporlog .text-wrapper-3,
+  .element-login-reporlog .text-wrapper-5,
+  .element-login-reporlog .entrar,
+  .element-login-reporlog .text-wrapper-7,
+  .element-login-reporlog .reporlog-jogo-de-v {
+    width: calc(100% - 48px);
+    margin-left: 24px;
+  }
+
+  .element-login-reporlog .div-wrapper {
+    width: calc(100% - 48px);
+    margin-left: 24px;
+  }
+
+  .element-login-reporlog .text-wrapper-4 {
+    width: calc(100% - 36px);
+  }
+
+  .element-login-reporlog .criar-conta {
+    width: calc(100% - 96px);
+    margin-left: 48px;
+  }
+
+  .element-login-reporlog .text-wrapper-8 {
+    width: calc(100% - 36px);
+  }
+}
