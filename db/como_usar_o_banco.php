@@ -1,5 +1,7 @@
 <?php
 // tenha a extenção "better comments" ativada
+// tenha um arquivo com a chaveAPI chamado "firestore.json" na pasta raiz do wamp (c:\wamp64\chaveAPIFirebase\firestore.json)
+// tenha o arquivo "cacert.pem" na pasta raiz do wamp (c:\wamp64\chaveAPI_ReportLog\cacert.pem)
 
 
 
