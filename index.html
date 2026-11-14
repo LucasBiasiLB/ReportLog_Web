@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportLog | Início</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- Ícones usados na página. Cada um é chamado depois com <use href="#nome"> -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+        <symbol id="i-sugestoes" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+        <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+        <symbol id="i-sino" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+        <symbol id="i-sair" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+        <symbol id="i-seta" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+    </svg>
+
+    <div class="pagina">
+
+        <!-- ========== MENU LATERAL ========== -->
+        <aside class="menu-lateral" id="menu-lateral">
+
+            <div class="marca">
+                <img src="assets/img/logo.png" alt="" class="marca-logo">
+                <img src="assets/img/reportlog_escrita.png" alt="ReportLog" class="marca-nome">
+            </div>
+            <p class="marca-frase">Jogue | Evolua | Conquiste.</p>
+
+            <hr class="linha">
+
+            <p class="menu-titulo">EXPLORE O REPORLOG</p>
+
+            <!-- Para a página atual usamos a classe "ativo" -->
+            <nav class="menu-links">
+                <a href="#" class="menu-link ativo">
+                    <svg class="icone"><use href="#i-inicio"/></svg> Início
+                </a>
+                <a href="#" class="menu-link">
+                    <svg class="icone"><use href="#i-sugestoes"/></svg> Sugestões
+                </a>
+                <a href="#" class="menu-link">
+                    <svg class="icone"><use href="#i-usuario"/></svg> Usuário
+                </a>
+                <a href="#" class="menu-link">
+                    <svg class="icone"><use href="#i-info"/></svg> Sobre nós
+                </a>
+            </nav>
+
+            <!-- Parte de baixo do menu -->
+            <div class="menu-rodape">
+                <div class="menu-aviso">
+                    <strong>O jogo também é seu.</strong>
+                    <p>Compartilhe ideias para melhorar o Reporlog.</p>
+                    <a href="#" class="link-pequeno">Ver sugestões <svg class="icone"><use href="#i-seta"/></svg></a>
+                </div>
+
+                <a href="#" class="menu-conta">
+                    <img src="assets/img/avatar.png" alt="" class="avatar">
+
+                    <!-- temporario ate ter usuario  -->
+                    <span>
+                        <strong>usuario</strong>
+                        <small>Minha conta</small>
+                    </span>
+                </a>
+
+                <button type="button" class="botao-sair">
+                    <svg class="icone"><use href="#i-sair"/></svg> Sair
+                </button>
+
+                <p class="versao">v0.0.1</p>
+            </div>
+        </aside>
+
+        <!-- ========== CONTEÚDO ========== -->
+        <div class="conteudo">
+
+            <!-- Barra do topo -->
+            <header class="topo">
+                <!-- Botão que só aparece em telas pequenas, para abrir o menu -->
+                <button type="button" class="botao-menu" id="botao-menu" aria-label="Abrir menu" aria-expanded="false">
+                    <svg class="icone"><use href="#i-menu"/></svg>
+                </button>
+
+                <p class="topo-frase">Jogue | Evolua | Conquiste.</p>
+
+                <div class="topo-direita">
+                    <button type="button" class="botao-sino" aria-label="Notificações">
+                        <svg class="icone"><use href="#i-sino"/></svg>
+                    </button>
+                    <div class="topo-usuario">
+                        <img src="assets/img/avatar.png" alt="" class="avatar">
+                        <!-- temporario ate ter usuario  -->
+                        <span>usuario</span> 
+                    </div>
+                </div>
+            </header>
+
+            <main class="principal">
+
+                <h1 class="saudacao">Olá, <span>usuario</span></h1>
+                <p class="saudacao-texto">Aqui você acompanha os updates do Reporlog.</p>
+
+                <!-- Update em destaque -->
+                <section class="destaque">
+                    <div class="destaque-texto">
+                        <span class="etiqueta">v0.0.0</span>
+                        <h2>App novo</h2>
+                        <p class="destaque-descricao">O começo de tudo</p>
+                        <time class="destaque-data" datetime="2026-11-08">08/11/2026</time>
+                        <a href="#" class="botao">Ver detalhes <svg class="icone"><use href="#i-seta"/></svg></a>
+                    </div>
+                </section>
+
+                <!-- Atualizações recentes -->
+                <div class="secao-topo">
+                    <div>
+                        <p class="secao-rotulo">ATUALIZAÇÕES RECENTES</p>
+                        <h2 class="secao-titulo">Suas últimas atualizações</h2>
+                    </div>
+                    <a href="#" class="link-pequeno">Ver todas <svg class="icone"><use href="#i-seta"/></svg></a>
+                </div>
+
+                <div class="cartoes">
+
+            </main>
+
+            <footer class="rodape">Jogue | Evolua | Conquiste.</footer>
+        </div>
+    </div>
+
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+:root {
+    --fundo: #050f1c;
+    --fundo-menu: #071b2c;
+    --cartao: #0a2136;
+    --borda: #14466e;
+    --azul: #0099ff;
+    --azul-claro: #64c9ff;
+    --azul-botao: #138cd8;
+    --azul-ativo: #1a6f9f;
+    --branco: #f5f5f5;
+    --texto: #d4d0d0;
+    --cinza: #9a9999;
+    --vermelho: #ff4444;
+
+    --largura-menu: 250px;
+    --raio: 14px;
+}
+
+/* ---------- Tela inicial ---------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.icone {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--cartao);
+}
+
+/* ---------- Estrutura geral ---------- */
+
+.pagina {
+    min-height: 100vh;
+}
+
+/* O conteúdo começa depois do menu, que fica fixo na esquerda */
+.conteudo {
+    margin-left: var(--largura-menu);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Menu lateral ---------- */
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--largura-menu);
+    padding: 22px 16px 18px;
+    background: var(--fundo-menu);
+    border-right: 1px solid var(--borda);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.marca-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.marca-nome {
+    height: 30px;
+    width: auto;
+}
+
+.marca-frase {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--texto);
+}
+
+.linha {
+    border: 0;
+    border-top: 1px solid var(--borda);
+    margin: 14px 0;
+}
+
+.menu-titulo {
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    color: var(--cinza);
+    margin-bottom: 10px;
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--texto);
+    transition: background 0.2s;
+}
+
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.menu-link.ativo {
+    background: var(--azul-ativo);
+    color: var(--branco);
+}
+
+/* margin-top: auto empurra essa parte para o fim do menu */
+.menu-rodape {
+    margin-top: auto;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-aviso {
+    padding: 14px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--cartao);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.menu-aviso strong {
+    font-size: 13px;
+    color: var(--branco);
+}
+
+.menu-aviso p {
+    font-size: 11px;
+    color: var(--texto);
+}
+
+.menu-conta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--cartao);
+}
+
+.menu-conta span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.menu-conta strong {
+    font-size: 13px;
+    color: var(--branco);
+}
+
+.menu-conta small {
+    font-size: 11px;
+    color: var(--cinza);
+}
+
+.botao-sair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--vermelho);
+    font-size: 13px;
+}
+
+.botao-sair:hover {
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.versao {
+    text-align: right;
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+/* ---------- Barra do topo ---------- */
+
+.topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.topo-frase {
+    font-size: 12px;
+    color: var(--texto);
+}
+
+.topo-direita {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-left: auto;
+}
+
+.botao-sino {
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    color: var(--branco);
+}
+
+.topo-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--branco);
+}
+
+/* Só aparece em telas pequenas (veja o @media no fim do arquivo) */
+.botao-menu {
+    display: none;
+    padding: 6px;
+    background: none;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: var(--branco);
+}
+
+/* ---------- Conteúdo principal ---------- */
+
+.principal {
+    flex: 1;
+    padding: 28px 32px 20px;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.saudacao {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--branco);
+}
+
+.saudacao span {
+    color: var(--azul);
+}
+
+.saudacao-texto {
+    margin-top: 4px;
+    font-size: 13px;
+}
+
+/* ---------- Update em destaque ---------- */
+
+.destaque {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 22px;
+    min-height: 250px;
+    overflow: hidden;
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #0b2c47, #0a2136);
+}
+
+.destaque-texto {
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6px;
+}
+
+.etiqueta {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--azul-claro);
+    border-left: 2px solid var(--azul);
+    padding-left: 8px;
+}
+
+.destaque h2 {
+    margin-top: 10px;
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--branco);
+    line-height: 1.1;
+}
+
+.destaque-descricao {
+    font-size: 15px;
+    color: var(--texto);
+}
+
+.destaque-data {
+    font-size: 11px;
+    color: var(--cinza);
+}
+
+.destaque-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: var(--azul-botao);
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: filter 0.2s;
+}
+
+.botao:hover {
+    filter: brightness(1.15);
+}
+
+.botao .icone {
+    width: 14px;
+    height: 14px;
+}
+
+/* ---------- Títulos de seção ---------- */
+
+.secao-topo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 34px;
+    margin-bottom: 14px;
+}
+
+.secao-rotulo {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: var(--azul-claro);
+    border-left: 2px solid var(--azul);
+    padding-left: 8px;
+}
+
+.secao-titulo {
+    margin-top: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--branco);
+}
+
+.link-pequeno {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--azul-claro);
+}
+
+.link-pequeno .icone {
+    width: 12px;
+    height: 12px;
+}
+
+.link-pequeno:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Cartões ---------- */
+
+.cartoes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.cartao {
+    overflow: hidden;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--cartao);
+}
+
+/* Cartão com foto (último update) */
+.cartao-foto {
+    position: relative;
+    height: 130px;
+}
+
+.cartao-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.selo {
+    position: absolute;
+    left: 12px;
+    bottom: -10px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: var(--azul-botao);
+    color: var(--branco);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.cartao-corpo {
+    padding: 22px 16px 14px;
+}
+
+.cartao-corpo h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--branco);
+}
+
+.cartao-corpo p {
+    font-size: 11px;
+}
+
+.cartao-base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+.seta-link {
+    color: var(--azul-claro);
+}
+
+.seta-link .icone {
+    width: 18px;
+    height: 18px;
+}
+
+/* Cartões só com texto (sugestões e sobre nós) */
+.cartao-texto {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.cartao-texto h3 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--branco);
+}
+
+.cartao-texto p:not(.secao-rotulo) {
+    font-size: 12px;
+}
+
+.cartao-texto .link-pequeno {
+    margin-top: auto;
+    padding-top: 6px;
+}
+
+/* ---------- Rodapé ---------- */
+
+.rodape {
+    padding: 14px 32px 18px;
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 900px) {
+    /* o menu sai da tela e só aparece quando tem a classe "aberto" */
+    .menu-lateral {
+        transform: translateX(-100%);
+        transition: transform 0.25s;
+    }
+
+    .menu-lateral.aberto {
+        transform: translateX(0);
+    }
+
+    .conteudo {
+        margin-left: 0;
+    }
+
+    .botao-menu {
+        display: block;
+    }
+
+    .topo,
+    .principal,
+    .rodape {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .destaque {
+        grid-template-columns: 1fr;
+    }
+
+    .destaque-imagem {
+        height: 190px;
+        order: -1; /* a imagem passa para cima do texto */
+    }
+
+    .cartoes {
+        grid-template-columns: 1fr;
+    }
+}
