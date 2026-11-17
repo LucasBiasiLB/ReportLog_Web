@@ -1,17 +1,9 @@
 /* =====================================================================
-   cartoes.js  —  OS CARDS (componentes visuais)
-   ---------------------------------------------------------------------
-   Cada função recebe um OBJETO com os dados e devolve o card pronto
-   (um elemento HTML). Para usar: container.append( CartaoUpdate(dados) ).
-
-   Cards desta página:
-     CartaoDestaque  → card grande do topo da tela inicial
-     CartaoUpdate    → card de update com foto
-     CartaoTexto     → card só de texto (Sugestões / Sobre nós)
-     CartaoSugestao  → card de sugestão da comunidade
-
-   Os textos entram com textContent (nunca innerHTML) para que ninguém
-   consiga colocar código malicioso dentro de uma sugestão.
+Cards desta página:
+    CartaoDestaque  → card grande do topo da tela inicial
+    CartaoUpdate    → card de update com foto
+    CartaoTexto     → card só de texto (Sugestões / Sobre nós)
+    CartaoSugestao  → card de sugestão da comunidade
    ===================================================================== */
 
 

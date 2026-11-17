@@ -1,8 +1,3 @@
-/* =====================================================================
-pagina-sugestoes.js  —  monta os cards da TELA DE SUGESTÕES
-Usa: dados.js (buscar/publicar/curtir/excluir) e cartoes.js (CartaoSugestao).
-===================================================================== */
-
 const lista = document.getElementById("lista-sugestoes");
 const contador = document.getElementById("contador-sugestoes");
 const formulario = document.getElementById("form-sugestao");
