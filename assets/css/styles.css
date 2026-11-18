@@ -1130,3 +1130,254 @@ img {
         margin: 0 auto;
     }
 }
+
+/* ====================================================== */
+/* ========== CARDS CRIADOS PELO JS (cartoes.js) ======== */
+/* ====================================================== */
+
+/* Lista de sugestões: um card embaixo do outro */
+.sugestoes-cartoes {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Avatar com a inicial do autor (enquanto não há foto) */
+.avatar-inicial {
+    display: grid;
+    place-items: center;
+    background: var(--azul-ativo);
+    color: var(--branco);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Botão de curtir já curtido: coração preenchido */
+.curtir.curtido .icone {
+    fill: currentColor;
+}
+
+/* Cards sem imagem: bloco azul no lugar da foto */
+.cartao-foto-vazia,
+.destaque-sem-imagem {
+    background: linear-gradient(135deg, #0b3a5e, #0a2136 70%);
+}
+
+.vazio {
+    padding: 24px;
+    text-align: center;
+    color: var(--cinza);
+    border: 1px dashed var(--borda);
+    border-radius: var(--raio);
+}
+
+/* ====================================================== */
+/* ========== TELAS DE LOGIN E CRIAR CONTA ============== */
+/* ====================================================== */
+/* Estas telas não têm menu lateral, por isso usam a classe "auth" no body */
+
+.auth-pagina {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 32px;
+}
+
+/* Topo: marca à esquerda, link à direita, linha embaixo */
+.auth-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--borda);
+}
+
+.auth-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-frase {
+    margin-left: 6px;
+    font-size: 11px;
+    color: var(--texto);
+}
+
+.auth-portal {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--azul-claro);
+}
+
+.auth-portal:hover {
+    text-decoration: underline;
+}
+
+/* Conteúdo centralizado */
+.auth-principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 0 32px;
+}
+
+.auth-titulo {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--branco);
+}
+
+.auth-subtitulo {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--texto);
+    text-align: center;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 360px;
+    margin-top: 32px;
+}
+
+/* Campo: rótulo azul pequeno + caixa de texto */
+.auth-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.auth-campo span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--azul-claro);
+}
+
+.auth-campo input {
+    padding: 14px 16px;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    background: var(--cartao);
+    color: var(--branco);
+    font: inherit;
+    font-size: 13px;
+}
+
+.auth-campo input::placeholder {
+    color: var(--cinza);
+}
+
+.auth-campo input:focus {
+    outline: 0;
+    border-color: var(--azul);
+}
+
+/* Checkbox dos termos */
+.auth-termos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--texto);
+    cursor: pointer;
+}
+
+.auth-termos input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    background: var(--cartao);
+    cursor: pointer;
+}
+
+.auth-termos input:checked {
+    background: var(--azul);
+    border-color: var(--azul);
+    box-shadow: inset 0 0 0 3px var(--cartao);
+}
+
+.auth-termos input:focus-visible,
+.botao-contorno:focus-visible {
+    outline: 2px solid var(--azul-claro);
+    outline-offset: 2px;
+}
+
+/* Botão principal (usa .botao + .botao-largo que já existem) */
+.auth-entrar {
+    margin-top: 10px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.auth-link-centro {
+    align-self: center;
+    font-size: 12px;
+    color: var(--texto);
+}
+
+.auth-link-centro:hover {
+    text-decoration: underline;
+}
+
+/* Botão só com contorno (Criar conta, na tela de login) */
+.botao-contorno {
+    align-self: center;
+    margin-top: 8px;
+    padding: 12px 56px;
+    border: 1px solid var(--branco);
+    border-radius: 12px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.botao-contorno:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-troca {
+    text-align: center;
+    font-size: 12px;
+}
+
+.auth-troca a {
+    color: var(--azul-claro);
+}
+
+.auth-troca a:hover {
+    text-decoration: underline;
+}
+
+.auth-rodape {
+    padding: 14px 0 18px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--cinza);
+}
+
+@media (max-width: 600px) {
+    .auth-pagina {
+        padding: 0 18px;
+    }
+
+    .auth-frase {
+        display: none;
+    }
+
+    .auth-principal {
+        padding-top: 36px;
+    }
+}
