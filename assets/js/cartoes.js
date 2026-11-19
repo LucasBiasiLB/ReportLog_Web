@@ -119,7 +119,7 @@ function CartaoTexto(dados) {
 
 /* ---------- CARD DE SUGESTÃO ----------
    dados: { id, autor, uid, data, categoria, titulo, descricao,
-            icone, curtidas, curtiuEu }
+            icone, curtidas, curtiuEu, fotoPerfil }
    acoes: { aoCurtir(id), aoExcluir(id) }  ← funções que a PÁGINA define.
    O card não mexe nos dados: só avisa a página que o botão foi clicado. */
 function CartaoSugestao(dados, acoes) {
@@ -128,7 +128,16 @@ function CartaoSugestao(dados, acoes) {
 
     // Topo: avatar + autor/data + categoria
     const topo = el("header", "sugestao-topo");
-    const avatar = el("div", "avatar avatar-inicial", dados.autor.charAt(0).toUpperCase());
+    // Se o usuário tem fotoPerfil (URL vinda do join com 'usuarios'), mostra a imagem;
+    // senão, mostra a inicial do nome como antes.
+    let avatar;
+    if (dados.fotoPerfil) {
+        avatar = el("img", "avatar");
+        avatar.src = dados.fotoPerfil;
+        avatar.alt = dados.autor || "";
+    } else {
+        avatar = el("div", "avatar avatar-inicial", (dados.autor || "?").charAt(0).toUpperCase());
+    }
     const autor = el("div", "sugestao-autor");
     autor.append(el("strong", "", dados.autor), el("small", "", formatarData(dados.data)));
     topo.append(avatar, autor, el("span", "categoria-selo", dados.categoria));
@@ -138,7 +147,12 @@ function CartaoSugestao(dados, acoes) {
     const texto = el("div", "sugestao-texto");
     texto.append(el("h3", "", dados.titulo), el("p", "", dados.descricao));
     const caixaIcone = el("div", "sugestao-icone");
-    caixaIcone.append(icone(dados.icone));
+    // dados.icon guarda o NOME ("atck", "def"...); ICONS traduz para o caminho da imagem
+    const imgIcone = el("img", "icone-item");
+    const chaveIcone = (dados.icon || "").replace("#", "");
+    imgIcone.src = ICONS[chaveIcone] || "/ReportLog_Web/assets/icons/logo.png";
+    imgIcone.alt = chaveIcone;
+    caixaIcone.append(imgIcone);
     corpo.append(texto, caixaIcone);
 
     // Base: botão de curtir (+ excluir, só para o dono ou admin)

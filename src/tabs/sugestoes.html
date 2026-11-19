@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReportLog | Sugestões</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
 
@@ -37,8 +37,8 @@
         <aside class="menu-lateral" id="menu-lateral">
 
             <div class="marca">
-                <img src="../assets/img/logo.png" alt="" class="marca-logo">
-                <img src="../assets/img/reportlog_escrita.png" alt="ReportLog" class="marca-nome">
+                <img src="../../assets/img/logo.png" alt="" class="marca-logo">
+                <img src="../../assets/img/reportlog_escrita.png" alt="ReportLog" class="marca-nome">
             </div>
 
             <hr class="linha">
@@ -111,53 +111,25 @@
                     <section class="sugestoes-lista">
                         <div class="secao-topo">
                             <h2 class="secao-titulo">Ideias dos jogadores</h2>
-                            <span class="contador">1 publicação</span>
+                            <span class="contador" id="contador">0 publicações</span>
                         </div>
 
-                        <!-- Um cartão de sugestão (repetir para cada uma) -->
-                        <article class="sugestao">
-                            <header class="sugestao-topo">
-                                <img src="../assets/img/avatar.png" alt="" class="avatar">
-                                <div class="sugestao-autor">
-                                    <strong>Autor</strong>
-                                    <small>00/00/0000</small>
-                                </div>
-                                <span class="categoria-selo">Categoria</span>
-                            </header>
-
-                            <div class="sugestao-corpo">
-                                <div class="sugestao-texto">
-                                    <h3>Título da sugestão</h3>
-                                    <p>Descrição da sugestão.</p>
-                                </div>
-                                <div class="sugestao-icone">
-                                    <svg class="icone"><use href="#i-ideia"/></svg>
-                                </div>
-                            </div>
-
-                            <footer class="sugestao-base">
-                                <button type="button" class="curtir">
-                                    <svg class="icone"><use href="#i-coracao"/></svg> 0
-                                </button>
-                                <button type="button" class="excluir" aria-label="Excluir sugestão">
-                                    <svg class="icone"><use href="#i-lixo"/></svg>
-                                </button>
-                            </footer>
-                        </article>
+                        <!-- Os cards das sugestões são desenhados aqui pelo JS -->
+                        <div class="sugestoes-itens" id="lista-sugestoes"></div>
 
                         <!-- Dica -->
-                        <aside class="dica">
+                        <!-- <aside class="dica">
                             <svg class="icone"><use href="#i-info"/></svg>
                             <div>
                                 <strong>Dicas da comunidade</strong>
                                 <p>Mantenha suas sugestões respeitosas e construtivas para todos!</p>
                             </div>
-                        </aside>
+                        </aside> -->
                     </section>
 
                     <!-- ===== COLUNA DIREITA: formulário ===== -->
                     <aside class="sugestoes-form">
-                        <form class="formulario" action="#" method="post">
+                        <form class="formulario" id="form-sugestao" action="#" method="post">
                             <div class="formulario-topo">
                                 <svg class="icone"><use href="#i-mais"/></svg>
                                 <div>
@@ -192,12 +164,12 @@
                             <fieldset class="campo">
                                 <legend>Escolher ícone</legend>
                                 <div class="icones-escolha">
-                                    <!-- 5 opções de ícone; troque os ícones depois -->
-                                    <label class="icone-opcao"><input type="radio" name="icone" value="1" checked><span><svg class="icone"><use href="#i-ideia"/></svg></span></label>
-                                    <label class="icone-opcao"><input type="radio" name="icone" value="2"><span><svg class="icone"><use href="#i-usuario"/></svg></span></label>
-                                    <label class="icone-opcao"><input type="radio" name="icone" value="3"><span><svg class="icone"><use href="#i-info"/></svg></span></label>
-                                    <label class="icone-opcao"><input type="radio" name="icone" value="4"><span><svg class="icone"><use href="#i-imagem"/></svg></span></label>
-                                    <label class="icone-opcao"><input type="radio" name="icone" value="5"><span><svg class="icone"><use href="#i-mais"/></svg></span></label>
+                                    <!-- 5 opções de ícone; os nomes são salvos no banco (atck, def...) -->
+                                    <label class="icone-opcao"><input type="radio" name="icone" value="1" checked><span><img src="/ReportLog_Web/assets/icons/atck.png" alt="atck"></span></label>
+                                    <label class="icone-opcao"><input type="radio" name="icone" value="2"><span><img src="/ReportLog_Web/assets/icons/def.png" alt="def"></span></label>
+                                    <label class="icone-opcao"><input type="radio" name="icone" value="3"><span><img src="/ReportLog_Web/assets/icons/mov.png" alt="mov"></span></label>
+                                    <label class="icone-opcao"><input type="radio" name="icone" value="4"><span><img src="/ReportLog_Web/assets/icons/mp.png" alt="mp"></span></label>
+                                    <label class="icone-opcao"><input type="radio" name="icone" value="5"><span><img src="/ReportLog_Web/assets/icons/set.png" alt="set"></span></label>
                                 </div>
                             </fieldset>
 
@@ -212,7 +184,11 @@
             <footer class="rodape">ReportLog • IFPR 2026</footer>
         </div>
     </div>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/dados.js"></script>
+    <script src="../../assets/js/icons.js"></script>
+    <script src="../../assets/js/cartoes.js"></script>
+    <script type="module" src="../../assets/js/pagina-sugestoes.js"></script>
 
-    <script src="../assets/js/scripts.js"></script>
 </body>
 </html>
