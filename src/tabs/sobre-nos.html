@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReportLog | Usuário</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>ReportLog | Sobre nós</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
 
@@ -50,10 +50,10 @@
                 <a href="sugestoes.html" class="menu-link">
                     <svg class="icone"><use href="#i-ideia"/></svg> Sugestões
                 </a>
-                <a href="usuario.html" class="menu-link ativo">
+                <a href="usuario.html" class="menu-link">
                     <svg class="icone"><use href="#i-usuario"/></svg> Usuário
                 </a>
-                <a href="sobre-nos.html" class="menu-link">
+                <a href="sobre-nos.html" class="menu-link ativo">
                     <svg class="icone"><use href="#i-info"/></svg> Sobre nós
                 </a>
             </nav>
@@ -76,7 +76,7 @@
                     <svg class="icone"><use href="#i-menu"/></svg>
                 </button>
 
-                <p class="topo-frase">Seu perfil</p>
+                <p class="topo-frase">Veja onde tudo começou</p>
 
                 <div class="topo-direita">
                     <button type="button" class="botao-sino" aria-label="Notificações">
@@ -87,49 +87,37 @@
 
             <main class="principal">
 
-                <!-- Banner + foto de perfil -->
-                <section class="perfil-capa">
-                    <div class="perfil-banner">
-                        <!-- <img src="../assets/image/banner.png" alt=""> -->
+                <!-- Cabeçalho -->
+                <section class="cabecalho-pagina">
+                    <div>
+                        <h1 class="titulo-pagina">Sobre Nós</h1>
+                        <p class="subtitulo-pagina">Conheça mais sobre o ReportLog!</p>
                     </div>
-                    <img src="../assets/image/avatar.png" alt="" class="perfil-avatar">
                 </section>
 
-                <!-- Nome e bio -->
-                <div class="perfil-info">
-                    <h1 class="perfil-nome">Nome do usuário</h1>
-                    <p class="perfil-bio">Bio do usuário</p>
-                </div>
+                <!-- Quem somos: logo à esquerda, texto à direita -->
+                <section class="bloco bloco-quem">
+                    <img src="../assets/image/logo.png" alt="Logo do ReportLog" class="bloco-logo">
+                    <div class="bloco-divisor"></div>
+                    <div class="bloco-texto">
+                        <p>Texto sobre a equipe: quem são, o que fazem.</p>
+                        <p>Texto sobre o aplicativo e o objetivo do projeto.</p>
+                    </div>
+                </section>
 
-                <!-- Ações -->
-                <nav class="perfil-acoes">
-                    <a href="#" class="acao">
-                        <span class="acao-icone"><svg class="icone"><use href="#i-editar"/></svg></span>
-                        <span class="acao-texto">
-                            <strong>Editar</strong>
-                            <small>Altere suas informações</small>
-                        </span>
-                        <svg class="icone acao-seta"><use href="#i-direita"/></svg>
-                    </a>
-
-                    <a href="sugestoes.html" class="acao">
-                        <span class="acao-icone"><svg class="icone"><use href="#i-ideia"/></svg></span>
-                        <span class="acao-texto">
-                            <strong>Sugestões</strong>
-                            <small>Veja suas sugestões</small>
-                        </span>
-                        <svg class="icone acao-seta"><use href="#i-direita"/></svg>
-                    </a>
-
-                    <button type="button" class="acao acao-perigo">
-                        <span class="acao-icone"><svg class="icone"><use href="#i-sair"/></svg></span>
-                        <span class="acao-texto">
-                            <strong>Sair</strong>
-                            <small>Encerrar sessão</small>
-                        </span>
-                        <svg class="icone acao-seta"><use href="#i-direita"/></svg>
-                    </button>
-                </nav>
+                <!-- Nossa história: vídeo à esquerda, texto à direita -->
+                <section class="bloco bloco-historia">
+                    <div class="video-espaco">
+                        <!-- Coloque aqui o vídeo (iframe do YouTube, por exemplo) -->
+                        <svg class="icone"><use href="#i-play"/></svg>
+                        <span>Espaço do vídeo</span>
+                    </div>
+                    <div class="bloco-divisor"></div>
+                    <div class="bloco-texto">
+                        <h2><svg class="icone"><use href="#i-play"/></svg> Nossa História</h2>
+                        <p>Texto contando a história do projeto.</p>
+                    </div>
+                </section>
             </main>
 
             <footer class="rodape">ReportLog • IFPR 2026</footer>

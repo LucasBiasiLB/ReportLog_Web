@@ -1,25 +1,34 @@
-const lista = document.getElementById("lista-sugestoes");
-const contador = document.getElementById("contador-sugestoes");
+import { buscarSugestoes, publicarSugestao, excluirSugestao, alternarCurtida } from "./banco.js";
+
+const lista = document.getElementById("lista-sugestoes");   // só o contêiner dos cards
+const contador = document.getElementById("contador");
 const formulario = document.getElementById("form-sugestao");
 
 // Ações que os cards chamam quando o usuário clica nos botões
 const acoes = {
-    aoCurtir(id) {
-        alternarCurtida(id);
-        desenharLista();
-    },
-    aoExcluir(id) {
-        if (confirm("Excluir esta sugestão?")) {
-            excluirSugestao(id);
-            desenharLista();
+    async aoCurtir(id) {
+        try {
+            await alternarCurtida(id);   // servidor já inverte curtidas/curtiuEu
+        } catch (e) {
+            alert(e.message);
         }
+        await desenharLista();
+    },
+    async aoExcluir(id) {
+        if (!confirm("Excluir esta sugestão?")) return;
+        try {
+            await excluirSugestao(id);
+        } catch (e) {
+            alert(e.message);
+        }
+        await desenharLista();
     }
 };
 
 // Limpa a lista e desenha um card para cada sugestão
-function desenharLista() {
-    const todas = buscarSugestoes();
-    lista.replaceChildren();                       // apaga o que tinha
+async function desenharLista() {
+    const todas = await buscarSugestoes();
+    lista.replaceChildren();                       // apaga os cards antigos
     todas.forEach((s) => lista.append(CartaoSugestao(s, acoes)));
 
     // Mensagem quando não há nenhuma
@@ -30,7 +39,7 @@ function desenharLista() {
 }
 
 // Formulário "Nova sugestão"
-formulario.addEventListener("submit", (evento) => {
+formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();                       // não recarrega a página
     const f = new FormData(formulario);
     const titulo = f.get("titulo").trim();
@@ -40,18 +49,26 @@ formulario.addEventListener("submit", (evento) => {
     const rotulos = { jogabilidade: "Jogabilidade", personagens: "Personagens",
                     interface: "Interface", graficos: "Gráficos", outros: "Outros" };
 
-    publicarSugestao({
-        titulo,
-        descricao,
-        categoria: rotulos[f.get("categoria")],
-        icone: ICONES_SUGESTAO[Number(f.get("icone")) - 1]
-    });
+    try {
+        await publicarSugestao({
+            titulo,
+            descricao,
+            categoria: rotulos[f.get("categoria")],
+            icon: ["atck", "def", "mov", "mp", "set"][Number(f.get("icone")) - 1] || "logo",
+            autor: usuarioAtual.nome,
+            uid: usuarioAtual.id,
+            data: new Date().toISOString().slice(0, 10)   // "AAAA-MM-DD"
+        });
+    } catch (e) {
+        alert(e.message);
+        return;
+    }
 
     formulario.reset();
     formulario.querySelectorAll(".campo small").forEach((s) => {
         s.textContent = "0/" + s.textContent.split("/")[1];   // zera os contadores
     });
-    desenharLista();
+    await desenharLista();
 });
 
 desenharLista();
