@@ -1,4 +1,4 @@
-// Quem está logado (de mentira)
+// Quem está logado (de mentira, por enquanto)
 const usuarioAtual = {
     id: "u1",
     nome: "Usuário",
