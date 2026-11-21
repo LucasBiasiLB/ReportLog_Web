@@ -1,14 +1,6 @@
 <?php
-// Endpoint da API de sugestões.
-// O JavaScript chama este arquivo com fetch; ele usa funcoes.php no servidor.
-//
-//   GET    ?id=123        -> um registro (ou null)
-//   GET                   -> todos os registros da coleção 'sugestoes'
-//   POST  {acao:"publicar", dados:{...}}  -> cria sugestão
-//   POST  {acao:"curtir", id:"..."}       -> curtir/descurtir
-//   DELETE ?id=123        -> exclui
-
 require __DIR__ . '/../db/funcoes.php';
+require __DIR__ . '/../db/sessao.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -22,18 +14,20 @@ function responder($dados, $status = 200) {
     exit;
 }
 
-// Join com a coleção 'usuarios': anexa fotoPerfil (e autor, se faltar)
-// usando o uid guardado em cada sugestão. O id do documento é o uid.
-$usuarios = [];   // cache para não repetir busca do mesmo usuário
+// Sem login, nada funciona
+$uid = uidLogado();
+if (!$uid) responder(['erro' => 'Faça login para continuar'], 401);
+
+$usuarios = [];
 function enriquecerSugestao($s) {
     global $usuarios;
-    $uid = $s['uid'] ?? null;
-    if (!$uid) return $s;
-    if (!array_key_exists($uid, $usuarios)) {
-        try { $usuarios[$uid] = buscarRegistros('usuarios', $uid); }
-        catch (Exception $e) { $usuarios[$uid] = null; }
+    $dono = $s['uid'] ?? null;
+    if (!$dono) return $s;
+    if (!array_key_exists($dono, $usuarios)) {
+        try { $usuarios[$dono] = buscarRegistros('usuarios', $dono); }
+        catch (Exception $e) { $usuarios[$dono] = null; }
     }
-    $u = $usuarios[$uid];
+    $u = $usuarios[$dono];
     if ($u) {
         $s['fotoPerfil'] = $u['fotoPerfil'] ?? $u['foto'] ?? $u['avatar'] ?? null;
         if (empty($s['autor'])) $s['autor'] = $u['nome'] ?? $u['name'] ?? 'Anônimo';
@@ -49,6 +43,11 @@ try {
 
     if ($metodo === 'DELETE') {
         if (!$id) responder(['erro' => 'Falta o id'], 400);
+        $s = buscarRegistros($colecao, $id);
+        if (!$s) responder(['erro' => 'Sugestão não encontrada'], 404);
+        if (($s['uid'] ?? null) !== $uid && !perfilUsuario($uid)['admin']) {
+            responder(['erro' => 'Você não pode excluir esta sugestão'], 403);
+        }
         deletarRegistro($colecao, $id);
         responder(['ok' => true]);
     }
@@ -58,30 +57,37 @@ try {
         $acao  = $corpo['acao'] ?? '';
 
         if ($acao === 'publicar') {
-            $dados = $corpo['dados'] ?? [];
-            if (empty($dados['titulo']) || empty($dados['descricao'])) {
+            $dados  = $corpo['dados'] ?? [];
+            $titulo = trim($dados['titulo'] ?? '');
+            $desc   = trim($dados['descricao'] ?? '');
+            if ($titulo === '' || $desc === '') {
                 responder(['erro' => 'Título e descrição são obrigatórios'], 400);
             }
-            $dados['curtidas'] = 0;
-            $dados['curtiuEu'] = false;
-            responder(enriquecerSugestao(adicionarRegistro($colecao, $dados)));
+            // Só aceita os campos permitidos; o resto o servidor define
+            $novo = [
+                'titulo'     => mb_substr($titulo, 0, 50),
+                'descricao'  => mb_substr($desc, 0, 500),
+                'categoria'  => $dados['categoria'] ?? 'Outros',
+                'icon'       => $dados['icon'] ?? 'logo',
+                'uid'        => $uid,
+                'autor'      => perfilUsuario($uid)['nome'],
+                'createdAt'  => timestamp(),
+                'curtidoPor' => [],
+            ];
+            responder(enriquecerSugestao(adicionarRegistro($colecao, $novo)));
         }
 
         if ($acao === 'curtir') {
-            $id = $corpo['id'] ?? null;
-            if (!$id) responder(['erro' => 'Falta o id'], 400);
+            $idSug = $corpo['id'] ?? null;
+            if (!$idSug) responder(['erro' => 'Falta o id'], 400);
 
-            $s = buscarRegistros($colecao, $id);
+            $s = buscarRegistros($colecao, $idSug);
             if (!$s) responder(['erro' => 'Sugestão não encontrada'], 404);
 
-            $s['curtiuEu']   = !$s['curtiuEu'];
-            $s['curtidas']  += $s['curtiuEu'] ? 1 : -1;
+            $jaCurtiu = in_array($uid, $s['curtidoPor'] ?? [], true);
+            alterarLista($colecao, $idSug, 'curtidoPor', $uid, !$jaCurtiu);
 
-            // atualiza só os dois campos que mudaram
-            responder(enriquecerSugestao(atualizarRegistro($colecao, $id, [
-                'curtidas' => $s['curtidas'],
-                'curtiuEu' => $s['curtiuEu'],
-            ])));
+            responder(enriquecerSugestao(buscarRegistros($colecao, $idSug)));
         }
 
         responder(['erro' => 'Ação desconhecida'], 400);

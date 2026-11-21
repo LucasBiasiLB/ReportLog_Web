@@ -163,6 +163,26 @@ function documentoParaArray($doc) {
     return $item;
 }
 
+function identityRequest($endpoint, $corpo) {
+    $cfg = configLocal();
+    $ch = curl_init("https://identitytoolkit.googleapis.com/v1/$endpoint?key=" . $cfg['firebase_api_key']);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+        CURLOPT_POSTFIELDS     => json_encode($corpo),
+        CURLOPT_CAINFO         => $cfg['cacert'],
+    ]);
+    $bruto = curl_exec($ch);
+    $erro  = curl_error($ch);
+    curl_close($ch);
+
+    if ($bruto === false) throw new Exception("Erro de conexão: $erro");
+    $r = json_decode($bruto, true);
+    if (isset($r['error'])) throw new Exception($r['error']['message'] ?? 'Erro', 401);
+    return $r;
+}
+
 // ---------- CRUD ----------
 
 // 1) READ
@@ -245,4 +265,27 @@ function atualizarRegistro($colecao, $id, $dados) {
     return documentoParaArray(
         firestoreRequest('PATCH', $url, ['fields' => paraCamposFirestore($dados)])
     );
+}
+
+// 5) Adiciona ou remove UM valor de um campo-lista, de forma atômica.
+//    Usa o :commit do Firestore (appendMissingElements / removeAllFromArray),
+//    então duas pessoas curtindo ao mesmo tempo não se sobrescrevem.
+function alterarLista($colecao, $id, $campo, $valor, $adicionar) {
+    $projeto = carregarChave()['project_id'];
+    $nome = "projects/$projeto/databases/(default)/documents/$colecao/" . rawurlencode($id);
+
+    firestoreRequest('POST', urlBase() . ':commit', [
+        'writes' => [[
+            'transform' => [
+                'document'        => $nome,
+                'fieldTransforms' => [[
+                    'fieldPath' => $campo,
+                    ($adicionar ? 'appendMissingElements' : 'removeAllFromArray')
+                        => ['values' => [paraValorFirestore($valor)]],
+                ]],
+            ],
+            'currentDocument' => ['exists' => true],   // erro 404 se a sugestão não existir
+        ]],
+    ]);
+    return true;
 }

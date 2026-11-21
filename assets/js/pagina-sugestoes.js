@@ -1,5 +1,7 @@
 import { buscarSugestoes, publicarSugestao, excluirSugestao, alternarCurtida } from "./banco.js";
 
+await sessaoPronta;   // garante que usuarioAtual já existe antes de desenhar os cards
+
 const lista = document.getElementById("lista-sugestoes");   // só o contêiner dos cards
 const contador = document.getElementById("contador");
 const formulario = document.getElementById("form-sugestao");
@@ -54,10 +56,7 @@ formulario.addEventListener("submit", async (evento) => {
             titulo,
             descricao,
             categoria: rotulos[f.get("categoria")],
-            icon: ["atck", "def", "mov", "mp", "set"][Number(f.get("icone")) - 1] || "logo",
-            autor: usuarioAtual.nome,
-            uid: usuarioAtual.id,
-            data: new Date().toISOString().slice(0, 10)   // "AAAA-MM-DD"
+            icon: ["atck", "def", "mov", "mp", "set"][Number(f.get("icone")) - 1] || "logo"
         });
     } catch (e) {
         alert(e.message);

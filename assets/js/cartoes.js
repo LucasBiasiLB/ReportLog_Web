@@ -7,34 +7,6 @@ Cards desta página:
    ===================================================================== */
 
 
-/* ---------- FERRAMENTAS PEQUENAS (usadas pelos cards) ---------- */
-
-// Cria um elemento: el("div", "minha-classe", "texto")
-function el(tag, classe, texto) {
-    const e = document.createElement(tag);
-    if (classe) e.className = classe;
-    if (texto !== undefined) e.textContent = texto;
-    return e;
-}
-
-// Cria um ícone SVG que usa o "sprite" (<symbol id="i-nome">) da página
-function icone(nome) {
-    const ns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("class", "icone");
-    const uso = document.createElementNS(ns, "use");
-    uso.setAttribute("href", "#i-" + nome);
-    svg.appendChild(uso);
-    return svg;
-}
-
-// "2026-11-08" → "08/11/2026"
-function formatarData(iso) {
-    const [ano, mes, dia] = iso.split("-");
-    return dia + "/" + mes + "/" + ano;
-}
-
-
 /* ---------- CARD DESTAQUE (grande, topo da tela inicial) ----------
    dados: { versao, titulo, descricao, data, imagem }                  */
 function CartaoDestaque(dados) {
@@ -118,10 +90,11 @@ function CartaoTexto(dados) {
 
 
 /* ---------- CARD DE SUGESTÃO ----------
-   dados: { id, autor, uid, data, categoria, titulo, descricao,
+    dados: { id, autor, uid, data, categoria, titulo, descricao,
             icone, curtidas, curtiuEu, fotoPerfil }
-   acoes: { aoCurtir(id), aoExcluir(id) }  ← funções que a PÁGINA define.
-   O card não mexe nos dados: só avisa a página que o botão foi clicado. */
+    acoes: { aoCurtir(id), aoExcluir(id) }  ← funções que a PÁGINA define.
+    O card não mexe nos dados: só avisa a página que o botão foi clicado. */
+
 function CartaoSugestao(dados, acoes) {
     const cartao = el("article", "sugestao");
     cartao.dataset.id = dados.id;

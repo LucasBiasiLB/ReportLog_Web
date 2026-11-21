@@ -1,9 +1,4 @@
-// Quem está logado (de mentira, por enquanto)
-const usuarioAtual = {
-    id: "u1",
-    nome: "Usuário",
-    admin: false          // mude para true para testar o botão de excluir em tudo
-};
+
 
 // ---------- UPDATES (tela inicial) ----------
 // O primeiro da lista é o "destaque" (card grande); os outros viram cards pequenos.
