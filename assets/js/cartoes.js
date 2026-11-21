@@ -137,7 +137,7 @@ function CartaoSugestao(dados, acoes) {
     base.append(curtir);
 
     const podeExcluir = usuarioAtual.admin || dados.uid === usuarioAtual.id;
-    if (podeExcluir) {
+    if (podeExcluir && acoes.aoExcluir) {   // só mostra se a página passou aoExcluir
         const excluir = el("button", "excluir");
         excluir.type = "button";
         excluir.setAttribute("aria-label", "Excluir sugestão");
