@@ -121,6 +121,7 @@ function CartaoTexto(dados) {
    dados: { id, autor, uid, data, categoria, titulo, descricao,
             icone, curtidas, curtiuEu, fotoPerfil }
    acoes: { aoCurtir(id), aoExcluir(id) }  ← funções que a PÁGINA define.
+   (aoExcluir é opcional: sem ele, o card não mostra o botão de excluir)
    O card não mexe nos dados: só avisa a página que o botão foi clicado. */
 function CartaoSugestao(dados, acoes) {
     const cartao = el("article", "sugestao");
@@ -164,7 +165,7 @@ function CartaoSugestao(dados, acoes) {
     base.append(curtir);
 
     const podeExcluir = usuarioAtual.admin || dados.uid === usuarioAtual.id;
-    if (podeExcluir) {
+    if (podeExcluir && acoes.aoExcluir) {   // só mostra se a página passou aoExcluir
         const excluir = el("button", "excluir");
         excluir.type = "button";
         excluir.setAttribute("aria-label", "Excluir sugestão");
