@@ -62,15 +62,19 @@ export async function excluirSugestao(id) {
 
 const API_UPDATES = "/ReportLog_Web/src/api/updates.php";
 
-// O Firestore usa descricaoCurta / imagemDestaque / dataAtualizacao;
-// os cards esperam descricao / imagem / data ("AAAA-MM-DD").
+// Converte qualquer data em milissegundos (data inválida vira 0 e vai para o fim)
+function paraMs(valor) {
+    const ms = new Date(valor).getTime();
+    return Number.isNaN(ms) ? 0 : ms;
+}
+
 function normalizarUpdate(u) {
     const quando = u.dataAtualizacao ?? u.createdAt ?? "";
     return {
         ...u,
         descricao: u.descricaoCurta ?? u.descricao ?? "",
         imagem: u.imagemDestaque ?? u.imagem ?? "",
-        data: quando ? new Date(quando).toLocaleDateString("sv-SE") : "",   // sv-SE dá AAAA-MM-DD no fuso local
+        data: paraMs(quando) ? new Date(quando).toLocaleDateString("sv-SE") : "",
         quando
     };
 }
@@ -79,5 +83,7 @@ function normalizarUpdate(u) {
 export async function buscarUpdates() {
     const dados = await chamarApi({}, API_UPDATES);
     return dados.map(normalizarUpdate)
-                .sort((a, b) => b.quando.localeCompare(a.quando));
+                .sort((a, b) =>
+                    paraMs(b.quando) - paraMs(a.quando) ||          // 1º: dataAtualizacao
+                    paraMs(b.createdAt) - paraMs(a.createdAt));     // empate: o criado por último
 }

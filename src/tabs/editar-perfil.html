@@ -87,37 +87,36 @@
 
                 <!-- Título da página -->
                 <div class="editar-titulo">
-                    <img src="../../assets/icons/logo.png" alt="" class="editar-titulo-img">
-                    <div>
-                        <h1 class="editar-h1">Editar perfil</h1>
-                        <p class="subtitulo-pagina">Personalize sua conta no ReportLog!</p>
-                    </div>
+                    <h1 class="editar-h1">Editar perfil</h1>
+                    <p class="subtitulo-pagina">Personalize sua conta no ReportLog!</p>
                 </div>
 
                 <!-- Card grande com tudo. Ainda sem função: o onsubmit="return false"
                     impede o envio. É no id="form-editar-perfil" que o "Salvar" será ligado. -->
-                <form class="editar-card" id="form-editar-perfil" onsubmit="return false;">
+                <form class="editar-card" id="form-editar-perfil">
 
                     <!-- 1) Banner com a foto de perfil no meio -->
                     <section class="editar-capa">
-                        <div class="editar-banner"></div>
+                        <button type="button" aria-label="Trocar banner" class="editar-banner-btn">
+                            <img src="../../assets/image/banner.png" alt="" class="editar-banner">
+                        </button>
                         <div class="editar-avatar-area">
-                            <img src="../../assets/icons/logo.png" alt="Foto de perfil" class="editar-avatar">
+                            <img src="../../assets/image/avatar.png" alt="Foto de perfil" class="editar-avatar">
                             <button type="button" class="editar-camera" aria-label="Trocar foto de perfil">
                                 <svg class="icone"><use href="#i-camera"/></svg>
                             </button>
                         </div>
                     </section>
 
-                    <!-- 2) Botão da foto padrão (pílula centralizada) -->
-                    <button type="button" class="editar-pilula">
-                        <svg class="icone"><use href="#i-imagem"/></svg>
-                        Foto do perfil padrão
-                        <svg class="icone"><use href="#i-direita"/></svg>
+                    <!-- 2) Botão da foto padrão -->
+                    <button type="button" class="editar-linha" id="btn-foto-padrao">
+                        <span class="editar-icone"><svg class="icone"><use href="#i-imagem"/></svg></span>
+                        <span class="editar-linha-texto">Foto do perfil padrão</span>
+                        <svg class="icone editar-linha-seta"><use href="#i-direita"/></svg>
                     </button>
 
                     <!-- 3) Linha do plano de fundo -->
-                    <button type="button" class="editar-linha">
+                    <button type="button" class="editar-linha" id="btn-capa-padrao">
                         <span class="editar-icone"><svg class="icone"><use href="#i-paleta"/></svg></span>
                         <span class="editar-linha-texto">Plano de fundo padrão</span>
                         <svg class="icone editar-linha-seta"><use href="#i-direita"/></svg>
@@ -158,8 +157,10 @@
         </div>
     </div>
 
+    <script src="../../assets/js/sessao.js"></script>
     <script src="../../assets/js/scripts.js"></script>
     <script src="../../assets/js/util.js"></script>
     <script src="../../assets/js/notificacoes.js"></script>
+    <script type="module" src="../../assets/js/pagina-editar-perfil.js"></script>
 </body>
 </html>

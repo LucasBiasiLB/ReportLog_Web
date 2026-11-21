@@ -17,7 +17,9 @@ function perfilUsuario($uid) {
     return [
         'id'         => $uid,
         'nome'       => $u['nome'] ?? $u['name'] ?? 'Anônimo',
+        'descricao'  => $u['descricao'] ?? '',
         'fotoPerfil' => $u['fotoPerfil'] ?? $u['foto'] ?? $u['avatar'] ?? null,
+        'fotoCapa'   => $u['fotoCapa'] ?? null,
         'admin'      => !empty($u['admin']),
     ];
 }

@@ -30,7 +30,7 @@ function enriquecerSugestao($s) {
     $u = $usuarios[$dono];
     if ($u) {
         $s['fotoPerfil'] = $u['fotoPerfil'] ?? $u['foto'] ?? $u['avatar'] ?? null;
-        if (empty($s['autor'])) $s['autor'] = $u['nome'] ?? $u['name'] ?? 'Anônimo';
+        if (empty($s['autor'])) $s['autor'] = $u['nome'] ?? $u['name'] ?? $s['autor'] ?? 'Anônimo';
     }
     return $s;
 }

@@ -289,3 +289,33 @@ function alterarLista($colecao, $id, $campo, $valor, $adicionar) {
     ]);
     return true;
 }
+
+// Envia uma imagem ao Cloudinary (envio assinado) e devolve a URL pública
+function enviarImagemCloudinary($caminho) {
+    $cfg = configLocal();
+    $timestamp = time();
+    $assinatura = sha1("timestamp=$timestamp" . $cfg['cloudinary_secret']);
+
+    $ch = curl_init("https://api.cloudinary.com/v1_1/{$cfg['cloudinary_cloud']}/image/upload");
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => [
+            'file'      => new CURLFile($caminho),
+            'api_key'   => $cfg['cloudinary_key'],
+            'timestamp' => $timestamp,
+            'signature' => $assinatura,
+        ],
+        CURLOPT_CAINFO         => $cfg['cacert'],
+    ]);
+    $bruto = curl_exec($ch);
+    $erro  = curl_error($ch);
+    curl_close($ch);
+
+    if ($bruto === false) throw new Exception("Erro de conexão: $erro");
+    $r = json_decode($bruto, true);
+    if (empty($r['secure_url'])) {
+        throw new Exception($r['error']['message'] ?? 'Falha ao enviar a imagem');
+    }
+    return $r['secure_url'];
+}
