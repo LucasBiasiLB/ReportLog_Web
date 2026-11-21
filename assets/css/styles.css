@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "ThirstyCaps";
+    src: url("../fonts/ThirstyCaps.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --fundo: #050f1c;
     --fundo-menu: #071b2c;
@@ -108,8 +115,8 @@ img {
 }
 
 .marca-nome {
-    height: 30px;
-    width: auto;
+    font-family: "ThirstyCaps";
+    font-size: 2rem;
 }
 
 .marca-frase {
