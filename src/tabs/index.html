@@ -10,6 +10,8 @@
 
     <!-- Ícones usados na página. Cada um é chamado depois com <use href="#nome"> -->
     <svg width="0" height="0" aria-hidden="true">
+        <symbol id="i-direita" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+        <symbol id="i-coracao" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
         <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
         <symbol id="i-sugestoes" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
         <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
@@ -85,10 +87,10 @@
             <main class="principal">
 
                 <!-- MAPA DA TELA INICIAL — onde cada card aparece:
-                     #destaque          → card GRANDE  (update mais novo)
-                     #cartoes-updates   → cards de UPDATE (os demais updates)
-                     #cartao-sugestao   → card de SUGESTÃO (a mais curtida)
-                     Quem coloca os cards em cada área é o pagina-inicio.js -->
+                    #destaque       → card GRANDE (update mais novo)
+                    #carrossel      → cards de UPDATE (os demais updates)
+                    #sugestao-top   → card de SUGESTÃO (a mais curtida)
+                    Quem coloca os cards em cada área é o pagina-inicio.js -->
 
                 <h1 class="saudacao">Olá, <span>usuario</span></h1>
                 <p class="saudacao-texto">Aqui você acompanha os updates do Reporlog.</p>
@@ -96,47 +98,45 @@
                 <!-- Update em destaque: o card grande é criado por pagina-inicio.js -->
                 <section class="destaque" id="destaque"></section>
 
-                <!-- Atualizações recentes -->
-                <div class="secao-topo">
-                    <div>
-                        <p class="secao-rotulo">ATUALIZAÇÕES RECENTES</p>
-                        <h2 class="secao-titulo">Suas últimas atualizações</h2>
+                <!-- Carrossel com os updates anteriores -->
+                <section id="secao-carrossel">
+                    <div class="secao-topo">
+                        <div>
+                            <p class="secao-rotulo">ATUALIZAÇÕES RECENTES</p>
+                            <h2 class="secao-titulo">Updates anteriores</h2>
+                        </div>
                     </div>
-                    <a href="#" class="link-pequeno">Ver todas <svg class="icone"><use href="#i-seta"/></svg></a>
-                </div>
 
-                <!-- ÁREA 2: cards de update (os que sobram depois do destaque).
-                     Preenchida por pagina-inicio.js → montarUpdates() -->
-                <div class="cartoes" id="cartoes-updates"></div>
-
-                <!-- sugestões -->
-                <div class="secao-topo">
-                    <div>
-                        <p class="secao-rotulo">SUGESTÃO</p>
-                        <h2 class="secao-titulo">Sugestão mais curtida pela comunidade</h2>
+                    <div class="carrossel">
+                        <button type="button" class="carrossel-seta anterior" id="carrossel-anterior" aria-label="Anterior">
+                            <svg class="icone"><use href="#i-direita"/></svg>
+                        </button>
+                        <div class="carrossel-faixa" id="carrossel"></div>
+                        <button type="button" class="carrossel-seta" id="carrossel-proximo" aria-label="Próximo">
+                            <svg class="icone"><use href="#i-direita"/></svg>
+                        </button>
                     </div>
-                    <a href="sugestoes.html" class="link-pequeno">Ver todas <svg class="icone"><use href="#i-seta"/></svg></a>
-                </div>
+                </section>
 
-                <!-- ÁREA 3: card da sugestão mais curtida (vem do banco).
-                     Preenchida por pagina-inicio.js → montarSugestaoMaisCurtida() -->
-                <div class="cartao-sugestao-destaque" id="cartao-sugestao"></div>
-
+                <!-- Sugestão mais curtida -->
+                <section id="secao-sugestao-top">
+                    <div class="secao-topo">
+                        <div>
+                            <p class="secao-rotulo">COMUNIDADE</p>
+                            <h2 class="secao-titulo">Sugestão mais curtida</h2>
+                        </div>
+                    </div>
+                    <div id="sugestao-top"></div>
+                </section>
             </main>
-
-            <footer class="rodape">Jogue | Evolua | Conquiste.</footer>
         </div>
     </div>
 
-    <!-- Ordem importa: cada arquivo usa o que o anterior criou -->
     <script src="../../assets/js/sessao.js"></script>
     <script src="../../assets/js/scripts.js"></script>
     <script src="../../assets/js/util.js"></script>
-    <script src="../../assets/js/dados.js"></script>
-    <script src="../../assets/js/icons.js"></script>
     <script src="../../assets/js/cartoes.js"></script>
     <script src="../../assets/js/notificacoes.js"></script>
-    <!-- type="module" porque a página usa o banco.js (import) -->
     <script type="module" src="../../assets/js/pagina-inicio.js"></script>
 </body>
 </html>

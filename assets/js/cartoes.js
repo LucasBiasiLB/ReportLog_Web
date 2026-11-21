@@ -72,22 +72,6 @@ function CartaoUpdate(dados) {
 }
 
 
-/* ---------- CARD SÓ DE TEXTO (atalhos para outras páginas) ----------
-   dados: { rotulo, titulo, texto, linkTexto, linkHref }               */
-function CartaoTexto(dados) {
-    const cartao = el("article", "cartao cartao-texto");
-    const link = el("a", "link-pequeno", dados.linkTexto + " ");
-    link.href = dados.linkHref;
-    link.append(icone("seta"));
-    cartao.append(
-        el("p", "secao-rotulo", dados.rotulo),
-        el("h3", "", dados.titulo),
-        el("p", "", dados.texto),
-        link
-    );
-    return cartao;
-}
-
 
 /* ---------- CARD DE SUGESTÃO ----------
     dados: { id, autor, uid, data, categoria, titulo, descricao,
@@ -146,6 +130,40 @@ function CartaoSugestao(dados, acoes) {
         base.append(excluir);
     }
 
+    cartao.append(topo, corpo, base);
+    return cartao;
+}
+
+/* ---------- CARD DA SUGESTÃO MAIS CURTIDA (tela inicial) ----------
+   dados: uma sugestão já normalizada (vinda do banco.js)              */
+function CartaoSugestaoTop(dados) {
+    const cartao = el("article", "sugestao sugestao-top");
+
+    const topo = el("header", "sugestao-topo");
+    let avatar;
+    if (dados.fotoPerfil) {
+        avatar = el("img", "avatar");
+        avatar.src = dados.fotoPerfil;
+        avatar.alt = dados.autor || "";
+    } else {
+        avatar = el("div", "avatar avatar-inicial", (dados.autor || "?").charAt(0).toUpperCase());
+    }
+    const autor = el("div", "sugestao-autor");
+    autor.append(el("strong", "", dados.autor), el("small", "", formatarData(dados.data)));
+    topo.append(avatar, autor, el("span", "categoria-selo", dados.categoria));
+
+    const corpo = el("div", "sugestao-texto");
+    corpo.append(el("h3", "", dados.titulo), el("p", "", dados.descricao));
+
+    const base = el("footer", "sugestao-base");
+    const curtidas = el("span", "sugestao-curtidas");
+    curtidas.append(icone("coracao"), document.createTextNode(" " + dados.curtidas));
+
+    const botao = el("a", "botao", "Ver sugestões ");
+    botao.href = "sugestoes.html#" + dados.id;      // o #id é usado no passo 7
+    botao.append(icone("seta"));
+
+    base.append(curtidas, botao);
     cartao.append(topo, corpo, base);
     return cartao;
 }

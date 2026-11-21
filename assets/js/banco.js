@@ -55,3 +55,29 @@ export async function alternarCurtida(id) {
 export async function excluirSugestao(id) {
     return chamarApi({ method: "DELETE" }, `${API}?id=${encodeURIComponent(id)}`);
 }
+// _____________________________________________________________________________________________________________________________________________
+
+// UPDATES visualização
+
+
+const API_UPDATES = "/ReportLog_Web/src/api/updates.php";
+
+// O Firestore usa descricaoCurta / imagemDestaque / dataAtualizacao;
+// os cards esperam descricao / imagem / data ("AAAA-MM-DD").
+function normalizarUpdate(u) {
+    const quando = u.dataAtualizacao ?? u.createdAt ?? "";
+    return {
+        ...u,
+        descricao: u.descricaoCurta ?? u.descricao ?? "",
+        imagem: u.imagemDestaque ?? u.imagem ?? "",
+        data: quando ? new Date(quando).toLocaleDateString("sv-SE") : "",   // sv-SE dá AAAA-MM-DD no fuso local
+        quando
+    };
+}
+
+// GET: updates publicados, do mais novo para o mais antigo
+export async function buscarUpdates() {
+    const dados = await chamarApi({}, API_UPDATES);
+    return dados.map(normalizarUpdate)
+                .sort((a, b) => b.quando.localeCompare(a.quando));
+}

@@ -1,85 +1,49 @@
-/* =====================================================================
-   pagina-inicio.js  —  monta os cards da TELA INICIAL (src/tabs/index.html)
-   ---------------------------------------------------------------------
-   A tela tem 3 ÁREAS, e cada uma recebe um tipo de card:
+import { buscarUpdates, buscarSugestoes } from "./banco.js";
 
-     #destaque          → CartaoDestaque    (update mais novo, card grande)
-     #cartoes-updates   → CartaoUpdate      (os outros updates)
-     #cartao-sugestao   → CartaoSugestao    (a sugestão mais curtida)
+await sessaoPronta;   // garante que usuarioAtual já existe
+document.querySelector(".saudacao span").textContent = usuarioAtual.nome;
 
-   Cada área tem a sua própria função. Assim, se uma delas der erro
-   (ex.: banco fora do ar), as outras continuam funcionando.
+async function montarUpdates() {
+    const areaDestaque = document.getElementById("destaque");
+    const faixa = document.getElementById("carrossel");
+    const secaoCarrossel = document.getElementById("secao-carrossel");
 
-   Usa: dados.js (updates), banco.js (sugestões) e cartoes.js (os cards).
-   Este arquivo é um MÓDULO (type="module") por causa do import abaixo.
-   ===================================================================== */
+    const [maisNovo, ...outros] = await buscarUpdates();
 
-import { buscarSugestoes, alternarCurtida } from "./banco.js";
+    // 1) O mais recente vira o card grande
+    if (maisNovo) {
+        areaDestaque.replaceWith(CartaoDestaque(maisNovo));
+    } else {
+        areaDestaque.replaceWith(el("p", "vazio", "Ainda não há updates publicados."));
+    }
 
-
-/* ---------- ÁREA 1: card grande (update mais novo) ---------- */
-function montarDestaque(updates) {
-    const area = document.getElementById("destaque");
-    const maisNovo = updates[0];                       // a lista já vem do mais novo ao mais antigo
-    if (maisNovo) area.replaceWith(CartaoDestaque(maisNovo));
-}
-
-
-/* ---------- ÁREA 2: cards de update (todos menos o destaque) ---------- */
-function montarUpdates(updates) {
-    const area = document.getElementById("cartoes-updates");
-    const outros = updates.slice(1);                   // pula o 1º (ele já virou destaque)
-
-    area.replaceChildren();
-    outros.forEach((u) => area.append(CartaoUpdate(u)));
-
+    // 2) Todos os outros vão para o carrossel
     if (outros.length === 0) {
-        area.append(el("p", "vazio", "Nenhum outro update por enquanto."));
+        secaoCarrossel.hidden = true;
+        return;
     }
+    outros.forEach((u) => faixa.append(CartaoUpdate(u)));
+
+    const rolar = (direcao) =>
+        faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.8, behavior: "smooth" });
+    document.getElementById("carrossel-anterior").addEventListener("click", () => rolar(-1));
+    document.getElementById("carrossel-proximo").addEventListener("click", () => rolar(1));
 }
 
+async function montarSugestaoTop() {
+    const area = document.getElementById("sugestao-top");
+    const secao = document.getElementById("secao-sugestao-top");
 
-/* ---------- ÁREA 3: sugestão mais curtida ---------- */
-// Ações do card. Nesta tela só dá para curtir (não tem aoExcluir,
-// então o botão de excluir nem aparece).
-const acoesSugestao = {
-    async aoCurtir(id) {
-        try {
-            await alternarCurtida(id);
-        } catch (e) {
-            alert(e.message);
-        }
-        await montarSugestaoMaisCurtida();             // redesenha: a mais curtida pode ter mudado
+    const todas = await buscarSugestoes();   // já vem da mais nova para a mais antiga
+    if (todas.length === 0) {
+        secao.hidden = true;
+        return;
     }
-};
-
-async function montarSugestaoMaisCurtida() {
-    const area = document.getElementById("cartao-sugestao");
-
-    try {
-        const todas = await buscarSugestoes();         // vem do banco (PHP)
-        area.replaceChildren();
-
-        if (todas.length === 0) {
-            area.append(el("p", "vazio", "Ainda não há sugestões. Seja o primeiro!"));
-            return;
-        }
-
-        // Escolhe a de mais curtidas. Em caso de empate, fica a mais nova
-        // (a lista já vem das mais novas para as mais antigas).
-        const maisCurtida = todas.reduce((melhor, atual) =>
-            atual.curtidas > melhor.curtidas ? atual : melhor
-        );
-        area.append(CartaoSugestao(maisCurtida, acoesSugestao));
-
-    } catch (e) {
-        area.replaceChildren(el("p", "vazio", "Não foi possível carregar a sugestão agora."));
-    }
+    // Maior número de curtidas; em caso de empate, fica a mais nova
+    const top = todas.reduce((melhor, s) => (s.curtidas > melhor.curtidas ? s : melhor));
+    area.append(CartaoSugestaoTop(top));
 }
 
-
-/* ---------- INÍCIO ---------- */
-const updates = buscarUpdates();                       // vem de dados.js
-montarDestaque(updates);
-montarUpdates(updates);
-montarSugestaoMaisCurtida();
+Promise.allSettled([montarUpdates(), montarSugestaoTop()]).then((resultados) =>
+    resultados.forEach((r) => r.status === "rejected" && console.error(r.reason))
+);

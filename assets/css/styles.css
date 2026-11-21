@@ -1836,3 +1836,35 @@ img {
         padding: 16px;
     }
 }
+
+.carrossel { display: flex; align-items: center; gap: 8px; }
+
+.carrossel-faixa {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+}
+.carrossel-faixa > .cartao {
+    flex: 0 0 min(320px, 85%);
+    scroll-snap-align: start;
+}
+
+.carrossel-seta {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+.carrossel-seta.anterior .icone { transform: rotate(180deg); }
+
+.sugestao-top .sugestao-base { justify-content: space-between; align-items: center; }
+.sugestao-curtidas { display: inline-flex; align-items: center; gap: 6px; }
