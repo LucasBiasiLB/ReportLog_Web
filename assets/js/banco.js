@@ -72,8 +72,14 @@ function normalizarUpdate(u) {
     const quando = u.dataAtualizacao ?? u.createdAt ?? "";
     return {
         ...u,
+        versao: "v" + String(u.versao ?? "").replace(/^v/i, ""),   // "1.2.0" → "v1.2.0"
         descricao: u.descricaoCurta ?? u.descricao ?? "",
         imagem: u.imagemDestaque ?? u.imagem ?? "",
+<<<<<<< Updated upstream
+=======
+        novidades: Array.isArray(u.novidades) ? u.novidades : [],
+        conteudo: u.conteudoDetalhado ?? u.conteudo ?? "",
+>>>>>>> Stashed changes
         data: paraMs(quando) ? new Date(quando).toLocaleDateString("sv-SE") : "",
         quando
     };

@@ -2,6 +2,9 @@
 Cards desta página:
     CartaoDestaque  → card grande do topo da tela inicial
     CartaoUpdate    → card de update com foto
+    CartaoUpdateLinha → update em linha (tela "Todas as atualizações")
+    CartaoNovidade  → uma novidade dentro da janela "Ver update"
+    MarkdownSimples → texto detalhado do update (títulos, listas e parágrafos)
     CartaoTexto     → card só de texto (Sugestões / Sobre nós)
     CartaoSugestao  → card de sugestão da comunidade
    ===================================================================== */
@@ -23,6 +26,10 @@ function CartaoDestaque(dados) {
     data.dateTime = dados.data;
     const botao = el("a", "botao", "Ver detalhes ");
     botao.href = "#";
+    botao.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        abrirVerUpdate(dados);          // vem do janelas-update.js
+    });
     botao.append(icone("seta"));
     texto.append(data, botao);
     secao.append(texto);
@@ -63,6 +70,10 @@ function CartaoUpdate(dados) {
     const seta = el("a", "seta-link");
     seta.href = "#";
     seta.setAttribute("aria-label", "Ver detalhes");
+    seta.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        abrirVerUpdate(dados);
+    });
     seta.append(icone("seta"));
     base.append(el("span", "", formatarData(dados.data)), seta);
     corpo.append(el("h3", "", dados.titulo), el("p", "", dados.descricao), base);
@@ -166,4 +177,109 @@ function CartaoSugestaoTop(dados) {
     base.append(curtidas, botao);
     cartao.append(topo, corpo, base);
     return cartao;
+}
+
+
+
+/* ---------- UPDATE EM LINHA (tela "Todas as atualizações") ----------
+    dados: { id, versao, titulo, descricao, data, imagem }
+    acoes: { aoAbrir(dados), aoExcluir(id) }  ← a página define.
+           O botão de excluir só aparece para admin.                    */
+function CartaoUpdateLinha(dados, acoes) {
+    const linha = el("article", "update-linha");
+    linha.tabIndex = 0;
+    linha.setAttribute("role", "button");
+    linha.setAttribute("aria-label", "Ver detalhes: " + dados.titulo);
+
+    // Foto (se não tiver, usa o banner padrão, igual ao app)
+    const foto = el("div", "update-linha-imagem");
+    const img = el("img");
+    img.src = dados.imagem || "../../assets/image/banner.png";
+    img.alt = "";
+    foto.append(img);
+
+    // Textos
+    const texto = el("div", "update-linha-texto");
+    texto.append(
+        el("span", "etiqueta", "UPDATE " + dados.versao),
+        el("h3", "", dados.titulo),
+        el("p", "", dados.descricao),
+        el("time", "update-linha-data", dados.data ? formatarData(dados.data) : "")
+    );
+
+    // Lado direito: lixeira (só admin) e a setinha
+    const lado = el("div", "update-linha-acoes");
+    if (usuarioAtual.admin && acoes.aoExcluir) {
+        const excluir = el("button", "update-linha-excluir");
+        excluir.type = "button";
+        excluir.setAttribute("aria-label", "Excluir update");
+        excluir.append(icone("lixo"));
+        excluir.addEventListener("click", (evento) => {
+            evento.stopPropagation();           // não abre a janela junto
+            acoes.aoExcluir(dados.id);
+        });
+        lado.append(excluir);
+    }
+    lado.append(icone("direita"));
+
+    linha.append(foto, texto, lado);
+    linha.addEventListener("click", () => acoes.aoAbrir(dados));
+    linha.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter") acoes.aoAbrir(dados);
+    });
+    return linha;
+}
+
+
+/* ---------- NOVIDADE (dentro da janela "Ver update") ----------
+    dados: { titulo, descricao, imagem }
+    "imagem" pode ser o nome de um ícone pronto ("atck", "def"...) ou uma URL. */
+function CartaoNovidade(dados) {
+    const cartao = el("article", "novidade");
+
+    const caixa = el("div", "novidade-icone");
+    const origem = dados.imagem ? (ICONS[dados.imagem] || dados.imagem) : "";
+    if (origem) {
+        const img = el("img");
+        img.src = origem;
+        img.alt = "";
+        caixa.append(img);
+    } else {
+        caixa.append(icone("estrela"));     // sem imagem: uma estrela só
+    }
+
+    const texto = el("div", "novidade-texto");
+    texto.append(el("strong", "", dados.titulo), el("p", "", dados.descricao));
+
+    cartao.append(caixa, texto);
+    return cartao;
+}
+
+
+/* ---------- MARKDOWN SIMPLES ----------
+    Entende só: títulos (#, ##, ###), listas (- ou *) e parágrafos.
+    Não entende negrito, links nem imagens (igual ao app). */
+function MarkdownSimples(texto) {
+    const area = el("div", "markdown");
+
+    texto.split("\n").forEach((linha) => {
+        const l = linha.trimEnd();
+        if (l.trim() === "") return;                         // linha vazia: o espaço vem do CSS
+
+        const titulo = l.match(/^(#{1,3})\s+(.*)$/);         // "## Novidades"
+        if (titulo) {
+            area.append(el("p", "md-titulo md-titulo-" + titulo[1].length, titulo[2]));
+            return;
+        }
+
+        const item = l.match(/^\s*[-*]\s+(.*)$/);            // "- texto"
+        if (item) {
+            area.append(el("p", "md-item", item[1]));
+            return;
+        }
+
+        area.append(el("p", "", l));                         // parágrafo normal
+    });
+
+    return area;
 }

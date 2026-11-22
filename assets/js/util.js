@@ -22,3 +22,8 @@ function formatarData(iso) {
     const [ano, mes, dia] = iso.split("-");
     return dia + "/" + mes + "/" + ano;
 }
+
+// "1.2.0" ou "v1.2.0" → "v1.2.0"
+function versaoComV(versao) {
+    return "v" + String(versao || "").replace(/^v/i, "");
+}

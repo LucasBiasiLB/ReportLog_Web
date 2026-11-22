@@ -3,6 +3,45 @@ import { buscarUpdates, buscarSugestoes } from "./banco.js";
 await sessaoPronta;   // garante que usuarioAtual já existe
 document.querySelector(".saudacao span").textContent = usuarioAtual.nome;
 
+// Botão "Criar update": só aparece para admin
+const botaoCriarUpdate = document.getElementById("botao-criar-update");
+if (usuarioAtual.admin) {
+    botaoCriarUpdate.hidden = false;
+    botaoCriarUpdate.addEventListener("click", abrirCriarUpdate);   // vem do janelas-update.js
+}
+
+// Formulário "Criar update" (por enquanto só a parte visual)
+formularioUpdate.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const f = new FormData(formularioUpdate);
+    const rascunho = evento.submitter && evento.submitter.value === "rascunho";
+
+    if (!f.get("titulo").trim()) {
+        alert("Coloque pelo menos o título.");
+        return;
+    }
+
+    // Rascunho pode estar incompleto. Publicar precisa de tudo preenchido.
+    if (!rascunho) {
+        if (!f.get("descricao").trim()) return alert("Preencha a descrição curta.");
+
+        // Uma novidade começada precisa de título e descrição (linha toda vazia é ignorada)
+        const titulos = f.getAll("novidade-titulo");
+        const descricoes = f.getAll("novidade-descricao");
+        const incompleta = titulos.some((t, i) =>
+            (t.trim() || descricoes[i].trim()) && (!t.trim() || !descricoes[i].trim())
+        );
+        if (incompleta) return alert("Toda novidade precisa de título e descrição (ou remova a que está incompleta).");
+    }
+
+    // TODO: salvar no banco (o updates.php ainda só aceita GET).
+    // Os campos que o app salva: titulo, versao, data, descricao, imagem,
+    // conteudo, status e as novidades (novidade-titulo, novidade-descricao, novidade-icone).
+    console.log("Update (ainda não salvo):", { status: rascunho ? "rascunho" : "publicado", ...Object.fromEntries(f) });
+    alert("Visual pronto! Falta ligar ao banco para salvar de verdade.");
+    janelaCriarUpdate.close();
+});
+
 async function montarUpdates() {
     const areaDestaque = document.getElementById("destaque");
     const faixa = document.getElementById("carrossel");
