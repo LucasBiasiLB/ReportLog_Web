@@ -92,6 +92,7 @@ form.addEventListener("submit", async (e) => {
         const resposta = await r.json();
         if (r.status === 401) { location.href = "login.html"; return; }
         if (!r.ok) throw new Error(resposta.erro || "Erro ao salvar");
+        cacheGravar("usuario", resposta);   // o servidor devolveu o perfil já atualizado
         location.href = "usuario.html";
     } catch (err) {
         alert(err.message);

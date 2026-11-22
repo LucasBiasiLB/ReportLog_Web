@@ -1,4 +1,7 @@
-import { buscarSugestoes, publicarSugestao, excluirSugestao, alternarCurtida } from "./banco.js";
+import { buscarSugestoesBruto, normalizarSugestoes, publicarSugestao, excluirSugestao, alternarCurtida } from "./banco.js";
+
+let sugestoesCruas = [];   // dados como vieram do servidor (ou do cache)
+let carregou = false;      // evita desenhar "não há sugestões" antes dos dados chegarem
 
 await sessaoPronta;   // garante que usuarioAtual já existe antes de desenhar os cards
 
@@ -65,6 +68,7 @@ function ordenar(sugestoes) {
 
 // Desenha os cards a partir da lista que já está na memória (sem ir ao servidor)
 function desenharCards() {
+    if (!carregou) return;
     const visiveis = ordenar(filtrar(todasSugestoes));
     lista.replaceChildren();
     visiveis.forEach((s) => lista.append(CartaoSugestao(s, acoes)));
@@ -79,11 +83,23 @@ function desenharCards() {
     contador.textContent = n + (n === 1 ? " publicação" : " publicações");
 }
 
-// Busca no servidor e redesenha (ao abrir a página e depois de curtir/excluir/publicar)
-async function desenharLista() {
-    todasSugestoes = await buscarSugestoes();
+// Recebe os dados crus (do cache ou do servidor) e desenha
+function mostrarSugestoes(crus) {
+    sugestoesCruas = crus;
+    todasSugestoes = normalizarSugestoes(crus);
+    carregou = true;
     desenharCards();
 }
+
+// Busca no servidor, guarda no cache e redesenha (depois de curtir/excluir/publicar)
+async function desenharLista() {
+    const crus = await buscarSugestoesBruto();
+    cacheGravar("sugestoes", crus);
+    mostrarSugestoes(crus);
+}
+
+// Se o login mudou (ex.: virou admin), refaz os cards
+document.addEventListener("usuario-atualizado", () => mostrarSugestoes(sugestoesCruas));
 
 campoBusca.addEventListener("input", desenharCards);
 
@@ -179,4 +195,4 @@ formulario.addEventListener("submit", async (evento) => {
     await desenharLista();
 });
 
-desenharLista();
+carregarComCache("sugestoes", buscarSugestoesBruto, mostrarSugestoes, lista).catch(console.error);

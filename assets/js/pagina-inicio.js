@@ -1,14 +1,19 @@
-import { buscarUpdates, buscarSugestoes } from "./banco.js";
+import { buscarUpdatesBruto, normalizarUpdates, buscarSugestoesBruto, normalizarSugestoes } from "./banco.js";
 
 await sessaoPronta;   // garante que usuarioAtual já existe
 document.querySelector(".saudacao span").textContent = usuarioAtual.nome;
 
-// Botão "Criar update": só aparece para admin
 const botaoCriarUpdate = document.getElementById("botao-criar-update");
-if (usuarioAtual.admin) {
-    botaoCriarUpdate.hidden = false;
-    botaoCriarUpdate.addEventListener("click", abrirCriarUpdate);   // vem do janelas-update.js
+botaoCriarUpdate.addEventListener("click", abrirCriarUpdate);   // vem do janelas-update.js
+
+// Nome na saudação e botão "Criar update" (só para admin)
+function aplicarUsuario() {
+    document.querySelector(".saudacao span").textContent = usuarioAtual.nome;
+    botaoCriarUpdate.hidden = !usuarioAtual.admin;
 }
+
+aplicarUsuario();
+document.addEventListener("usuario-atualizado", aplicarUsuario);
 
 // Formulário "Criar update" (por enquanto só a parte visual)
 formularioUpdate.addEventListener("submit", (evento) => {
@@ -42,47 +47,46 @@ formularioUpdate.addEventListener("submit", (evento) => {
     janelaCriarUpdate.close();
 });
 
-async function montarUpdates() {
-    const areaDestaque = document.getElementById("destaque");
-    const faixa = document.getElementById("carrossel");
-    const secaoCarrossel = document.getElementById("secao-carrossel");
+let destaqueAtual = document.getElementById("destaque");   // o card grande troca este elemento
+const faixa = document.getElementById("carrossel");
+const secaoCarrossel = document.getElementById("secao-carrossel");
 
-    const [maisNovo, ...outros] = await buscarUpdates();
+// Desenha updates a partir dos dados crus (do cache ou do servidor)
+function mostrarUpdates(crus) {
+    const [maisNovo, ...outros] = normalizarUpdates(crus);
 
     // 1) O mais recente vira o card grande
-    if (maisNovo) {
-        areaDestaque.replaceWith(CartaoDestaque(maisNovo));
-    } else {
-        areaDestaque.replaceWith(el("p", "vazio", "Ainda não há updates publicados."));
-    }
+    const novo = maisNovo
+        ? CartaoDestaque(maisNovo)
+        : el("p", "vazio", "Ainda não há updates publicados.");
+    destaqueAtual.replaceWith(novo);
+    destaqueAtual = novo;
 
     // 2) Todos os outros vão para o carrossel
-    if (outros.length === 0) {
-        secaoCarrossel.hidden = true;
-        return;
-    }
+    faixa.replaceChildren();
     outros.forEach((u) => faixa.append(CartaoUpdate(u)));
-
-    // const rolar = (direcao) =>
-    //     faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.8, behavior: "smooth" });
-    // document.getElementById("carrossel-anterior").addEventListener("click", () => rolar(-1));
-    // document.getElementById("carrossel-proximo").addEventListener("click", () => rolar(1));
+    secaoCarrossel.hidden = outros.length === 0;
 }
 
-async function montarSugestaoTop() {
-    const area = document.getElementById("sugestao-top");
-    const secao = document.getElementById("secao-sugestao-top");
+// Sugestão mais curtida
+const areaSugestao = document.getElementById("sugestao-top");
+const secaoSugestao = document.getElementById("secao-sugestao-top");
 
-    const todas = await buscarSugestoes();   // já vem da mais nova para a mais antiga
-    if (todas.length === 0) {
-        secao.hidden = true;
-        return;
-    }
+function mostrarSugestaoTop(crus) {
+    const todas = normalizarSugestoes(crus);   // já vem da mais nova para a mais antiga
+    areaSugestao.replaceChildren();
+    secaoSugestao.hidden = todas.length === 0;
+    if (todas.length === 0) return;
+
     // Maior número de curtidas; em caso de empate, fica a mais nova
     const top = todas.reduce((melhor, s) => (s.curtidas > melhor.curtidas ? s : melhor));
-    area.append(CartaoSugestaoTop(top));
+    areaSugestao.append(CartaoSugestaoTop(top));
 }
 
-Promise.allSettled([montarUpdates(), montarSugestaoTop()]).then((resultados) =>
+// Cada bloco mostra o que está salvo na hora; a rodinha só aparece se não houver nada
+Promise.allSettled([
+    carregarComCache("updates", buscarUpdatesBruto, mostrarUpdates, destaqueAtual),
+    carregarComCache("sugestoes", buscarSugestoesBruto, mostrarSugestaoTop, areaSugestao)
+]).then((resultados) =>
     resultados.forEach((r) => r.status === "rejected" && console.error(r.reason))
 );

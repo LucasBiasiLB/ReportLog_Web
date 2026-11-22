@@ -1,13 +1,7 @@
-async function enviarAuth(corpo) {
-    const r = await fetch(API_AUTH, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(corpo)
-    });
-    const dados = await r.json();
-    if (!r.ok) throw new Error(dados.erro || "Erro");
-    return dados;
-}
+const perfil = await enviarAuth({ acao: "login", email: f.get("email").trim(), senha: f.get("senha") });
+cacheLimparTudo();                  // limpa qualquer coisa de outra conta
+cacheGravar("usuario", perfil);
+location.href = "index.html";
 
 const formLogin = document.getElementById("form-login");
 if (formLogin) {

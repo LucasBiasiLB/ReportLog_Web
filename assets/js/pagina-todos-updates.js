@@ -1,4 +1,4 @@
-import { buscarUpdates } from "./banco.js";
+import { buscarUpdatesBruto, normalizarUpdates } from "./banco.js";
 
 await sessaoPronta;   // garante que usuarioAtual já existe antes de desenhar os cards
 
@@ -16,16 +16,12 @@ const acoes = {
     }
 };
 
-// Limpa a lista e desenha uma linha para cada update (do mais novo para o mais antigo)
-async function desenharLista() {
-    let todos = [];
-    try {
-        todos = await buscarUpdates();
-    } catch (e) {
-        lista.replaceChildren(el("p", "vazio", "Não foi possível carregar os updates."));
-        console.error(e);
-        return;
-    }
+let updatesCrus = [];
+
+// Desenha uma linha para cada update (do mais novo para o mais antigo)
+function mostrarUpdates(crus) {
+    updatesCrus = crus;
+    const todos = normalizarUpdates(crus);
 
     lista.replaceChildren();
     todos.forEach((u) => lista.append(CartaoUpdateLinha(u, acoes)));
@@ -36,4 +32,7 @@ async function desenharLista() {
     contador.textContent = todos.length + (todos.length === 1 ? " publicada" : " publicadas");
 }
 
-desenharLista();
+// Se o login mudou (ex.: virou admin), refaz as linhas (a lixeira é só do admin)
+document.addEventListener("usuario-atualizado", () => mostrarUpdates(updatesCrus));
+
+carregarComCache("updates", buscarUpdatesBruto, mostrarUpdates, lista).catch(console.error);

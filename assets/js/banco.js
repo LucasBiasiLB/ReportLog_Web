@@ -1,15 +1,19 @@
 const API = "/ReportLog_Web/src/api/sugestoes.php";
+const API_UPDATES = "/ReportLog_Web/src/api/updates.php";
 
 async function chamarApi(opcoes = {}, url = API) {
     const r = await fetch(url, opcoes);
     const dados = await r.json();
     if (r.status === 401) {
+        cacheLimparTudo();
         location.href = "login.html";
         return new Promise(() => {});          // pausa enquanto redireciona
     }
     if (!r.ok) throw new Error(dados.erro || "Erro na requisição");
     return dados;
 }
+
+/* ---------- SUGESTÕES ---------- */
 
 function normalizarSugestao(s) {
     const curtidoPor = Array.isArray(s.curtidoPor) ? s.curtidoPor : [];
@@ -23,12 +27,15 @@ function normalizarSugestao(s) {
     };
 }
 
-// GET: todas as sugestões (ou uma só, se passar o id), mais novas primeiro
-export async function buscarSugestoes(id = null) {
-    const url = id ? `${API}?id=${encodeURIComponent(id)}` : API;
-    const dados = await chamarApi({}, url);
-    if (id) return dados ? normalizarSugestao(dados) : null;
-    return dados.map(normalizarSugestao)
+// GET: dados CRUS do servidor (é isto que vai para o cache)
+export function buscarSugestoesBruto() {
+    return chamarApi();
+}
+
+// Deixa os dados no formato que os cards esperam, mais novas primeiro.
+// Roda a cada desenho, porque curtiuEu depende de quem está logado.
+export function normalizarSugestoes(lista) {
+    return lista.map(normalizarSugestao)
                 .sort((a, b) => b.data.localeCompare(a.data));
 }
 
@@ -55,12 +62,8 @@ export async function alternarCurtida(id) {
 export async function excluirSugestao(id) {
     return chamarApi({ method: "DELETE" }, `${API}?id=${encodeURIComponent(id)}`);
 }
-// _____________________________________________________________________________________________________________________________________________
 
-// UPDATES visualização
-
-
-const API_UPDATES = "/ReportLog_Web/src/api/updates.php";
+/* ---------- UPDATES ---------- */
 
 // Converte qualquer data em milissegundos (data inválida vira 0 e vai para o fim)
 function paraMs(valor) {
@@ -75,20 +78,21 @@ function normalizarUpdate(u) {
         versao: "v" + String(u.versao ?? "").replace(/^v/i, ""),   // "1.2.0" → "v1.2.0"
         descricao: u.descricaoCurta ?? u.descricao ?? "",
         imagem: u.imagemDestaque ?? u.imagem ?? "",
-<<<<<<< Updated upstream
-=======
         novidades: Array.isArray(u.novidades) ? u.novidades : [],
         conteudo: u.conteudoDetalhado ?? u.conteudo ?? "",
->>>>>>> Stashed changes
         data: paraMs(quando) ? new Date(quando).toLocaleDateString("sv-SE") : "",
         quando
     };
 }
 
-// GET: updates publicados, do mais novo para o mais antigo
-export async function buscarUpdates() {
-    const dados = await chamarApi({}, API_UPDATES);
-    return dados.map(normalizarUpdate)
+// GET: updates publicados, dados CRUS do servidor
+export function buscarUpdatesBruto() {
+    return chamarApi({}, API_UPDATES);
+}
+
+// Do mais novo para o mais antigo
+export function normalizarUpdates(lista) {
+    return lista.map(normalizarUpdate)
                 .sort((a, b) =>
                     paraMs(b.quando) - paraMs(a.quando) ||          // 1º: dataAtualizacao
                     paraMs(b.createdAt) - paraMs(a.createdAt));     // empate: o criado por último

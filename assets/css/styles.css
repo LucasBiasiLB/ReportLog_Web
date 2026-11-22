@@ -742,7 +742,16 @@ img {
     align-items: center;
 }
 
+.sugestoes-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
+.sugestoes-form {
+    position: sticky;
+    top: 0;
+}
 
 .contador {
     padding: 4px 14px;
@@ -889,6 +898,7 @@ img {
     border: 1px solid var(--borda);
     border-radius: 18px;
     background: var(--cartao);
+    margin-top: 48px;
 }
 
 .formulario-topo {
@@ -2584,3 +2594,37 @@ img {
         justify-content: center;
     }
 }
+
+.carregando {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 48px 0;
+}
+
+.rodinha {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--cartao);
+    border-top-color: var(--azul-claro);
+    border-radius: 50%;
+    animation: girar 0.8s ease-in-out infinite;
+}
+
+@keyframes girar { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+    .rodinha { animation-duration: 2.4s; }   /* gira mais devagar para quem prefere menos movimento */
+}
+
+.carregando-tela {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    background: var(--fundo);
+}
+
+/* a rodinha dentro do card grande do início ocupa a largura toda */
+.destaque > .carregando { grid-column: 1 / -1; }
