@@ -2558,6 +2558,116 @@ img {
     color: var(--azul-claro);
 }
 
+/* ---------- Tela "Minhas sugestões" ----------
+   Mesmo desenho da lista de updates, com o ícone da sugestão no lugar da foto. */
+
+.sugestao-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sugestao-linha {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--cartao);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.sugestao-linha:hover,
+.sugestao-linha:focus-visible {
+    border-color: var(--azul);
+    outline: 0;
+}
+
+.sugestao-linha-icone {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 92px;
+    height: 92px;
+    padding: 18px;
+    border-radius: 10px;
+    background: var(--azul-ativo);
+}
+
+.sugestao-linha-texto {
+    flex: 1;
+    min-width: 0;
+}
+
+.sugestao-linha-texto .categoria-selo {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+}
+
+.sugestao-linha-texto h3 {
+    margin-top: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--branco);
+}
+
+.sugestao-linha-texto p {
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sugestao-linha-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--cinza);
+}
+
+.sugestao-linha-curtidas {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--azul);
+}
+
+.sugestao-linha-curtidas .icone {
+    width: 13px;
+    height: 13px;
+}
+
+.sugestao-linha-acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--azul-claro);
+}
+
+.sugestao-linha-excluir {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--vermelho);
+}
+
+.sugestao-linha-excluir:hover,
+.sugestao-linha-excluir:focus-visible {
+    border-color: var(--vermelho);
+    outline: 0;
+}
+
 /* ---------- Telas pequenas ---------- */
 
 @media (max-width: 600px) {
@@ -2585,6 +2695,16 @@ img {
     }
 
     .update-linha-texto h3 {
+        font-size: 15px;
+    }
+
+    .sugestao-linha-icone {
+        width: 60px;
+        height: 60px;
+        padding: 12px;
+    }
+
+    .sugestao-linha-texto h3 {
         font-size: 15px;
     }
 
