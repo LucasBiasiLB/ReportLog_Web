@@ -63,10 +63,10 @@ async function montarUpdates() {
     }
     outros.forEach((u) => faixa.append(CartaoUpdate(u)));
 
-    const rolar = (direcao) =>
-        faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.8, behavior: "smooth" });
-    document.getElementById("carrossel-anterior").addEventListener("click", () => rolar(-1));
-    document.getElementById("carrossel-proximo").addEventListener("click", () => rolar(1));
+    // const rolar = (direcao) =>
+    //     faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.8, behavior: "smooth" });
+    // document.getElementById("carrossel-anterior").addEventListener("click", () => rolar(-1));
+    // document.getElementById("carrossel-proximo").addEventListener("click", () => rolar(1));
 }
 
 async function montarSugestaoTop() {
