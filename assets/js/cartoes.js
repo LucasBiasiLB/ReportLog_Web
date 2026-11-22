@@ -7,6 +7,7 @@ Cards desta página:
     MarkdownSimples → texto detalhado do update (títulos, listas e parágrafos)
     CartaoTexto     → card só de texto (Sugestões / Sobre nós)
     CartaoSugestao  → card de sugestão da comunidade
+    CartaoSugestaoLinha → sugestão em linha (tela "Minhas sugestões")
    ===================================================================== */
 
 
@@ -223,6 +224,61 @@ function CartaoUpdateLinha(dados, acoes) {
     lado.append(icone("direita"));
 
     linha.append(foto, texto, lado);
+    linha.addEventListener("click", () => acoes.aoAbrir(dados));
+    linha.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter") acoes.aoAbrir(dados);
+    });
+    return linha;
+}
+
+
+/* ---------- SUGESTÃO EM LINHA (tela "Minhas sugestões") ----------
+    dados: { id, data, categoria, titulo, descricao, icon, curtidas }
+    acoes: { aoAbrir(dados), aoExcluir(id) }  ← a página define.
+    Mesmo formato da linha de update, mas com o ícone da sugestão no lugar da foto. */
+function CartaoSugestaoLinha(dados, acoes) {
+    const linha = el("article", "sugestao-linha");
+    linha.tabIndex = 0;
+    linha.setAttribute("role", "button");
+    linha.setAttribute("aria-label", "Ver sugestão: " + dados.titulo);
+
+    // Ícone que o usuário escolheu (dados.icon guarda o NOME; ICONS traduz para o caminho)
+    const caixaIcone = el("div", "sugestao-linha-icone");
+    const imgIcone = el("img", "icone-item");
+    const chaveIcone = (dados.icon || "").replace("#", "");
+    imgIcone.src = ICONS[chaveIcone] || ICONS.logo;
+    imgIcone.alt = "";
+    caixaIcone.append(imgIcone);
+
+    // Textos: categoria, título, descrição e (data + curtidas)
+    const texto = el("div", "sugestao-linha-texto");
+    const meta = el("div", "sugestao-linha-meta");
+    const curtidas = el("span", "sugestao-linha-curtidas");
+    curtidas.append(icone("coracao"), document.createTextNode(" " + dados.curtidas));
+    meta.append(el("time", "", dados.data ? formatarData(dados.data) : ""), curtidas);
+    texto.append(
+        el("span", "categoria-selo", dados.categoria),
+        el("h3", "", dados.titulo),
+        el("p", "", dados.descricao),
+        meta
+    );
+
+    // Lado direito: lixeira (a sugestão é do próprio usuário) e a setinha
+    const lado = el("div", "sugestao-linha-acoes");
+    if (acoes.aoExcluir) {
+        const excluir = el("button", "sugestao-linha-excluir");
+        excluir.type = "button";
+        excluir.setAttribute("aria-label", "Excluir sugestão");
+        excluir.append(icone("lixo"));
+        excluir.addEventListener("click", (evento) => {
+            evento.stopPropagation();           // não abre a sugestão junto
+            acoes.aoExcluir(dados.id);
+        });
+        lado.append(excluir);
+    }
+    lado.append(icone("direita"));
+
+    linha.append(caixaIcone, texto, lado);
     linha.addEventListener("click", () => acoes.aoAbrir(dados));
     linha.addEventListener("keydown", (evento) => {
         if (evento.key === "Enter") acoes.aoAbrir(dados);
