@@ -1,4 +1,6 @@
 <?php
+require_once 'seguranca.php';
+seguranca();
 // criado de forma temporaria so para ter ajuda visual basicamente falando
 
 function carregarChave() {

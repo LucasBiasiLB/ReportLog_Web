@@ -1884,9 +1884,106 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
-<<<<<<< Updated upstream
 }
-=======
+.cabecalho-ferramentas { position: relative; }
+
+.painel-filtros {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 20;
+    width: min(280px, 90vw);
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 12px;
+    border: 1px solid var(--borda);
+    background: var(--cartao);
+}
+.painel-filtros[hidden] { display: none; }
+
+.painel-filtros-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.filtro-grupo { 
+    border: 0; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+}
+.filtro-grupo legend { 
+    font-weight: 700; 
+    margin-bottom: 6px; 
+    padding: 0; 
+}
+
+.filtro-opcao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+}
+
+.filtro-opcao input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--borda);
+    border-radius: 24px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.filtro-opcao input:checked {
+    background: var(--azul);
+    border-color: var(--azul);
+}
+
+.filtros-limpar {
+    color: inherit;
+    cursor: pointer;
+    align-self: start;
+    background: transparent;
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+/* Bolinha com o número de filtros ativos no botão */
+.filtros-contagem {
+    margin-left: 6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    display: inline-grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+.filtros-contagem[hidden] { display: none; }
+
+.filtros-ancora { 
+    position: relative;
+    top: 24px; 
+}   /* o painel se posiciona em relação ao botão */
+
+
+
+/* Telas pequenas: o painel ocupa a largura da barra, abaixo dela,
+   para não sair da tela quando o botão estiver na esquerda */
+@media (max-width: 600px) {
+    .filtros-ancora { position: static; }
+    .painel-filtros { left: 0; right: 0; width: auto; }
 }
 
 /* ====================================================== */
@@ -2484,4 +2581,3 @@ img {
         justify-content: center;
     }
 }
->>>>>>> Stashed changes
