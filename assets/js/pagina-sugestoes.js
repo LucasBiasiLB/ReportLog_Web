@@ -165,6 +165,27 @@ document.addEventListener("keydown", (e) => {
 
 aplicar();   // deixa a bolinha do botão no estado certo ao abrir a página
 
+// Troca o conteúdo do botão por uma rodinha enquanto a sugestão é publicada
+const botaoPublicar = formulario.querySelector('button[type="submit"]');
+const htmlBotao = botaoPublicar.innerHTML;   // guarda o original (ícone + texto)
+
+function botaoCarregando() {
+    botaoPublicar.disabled = true;
+    botaoPublicar.textContent = "";
+    const roda = document.createElement("span");
+    roda.className = "rodinha rodinha-botao";
+    roda.setAttribute("role", "status");
+    roda.setAttribute("aria-label", "Publicando");
+    botaoPublicar.append(roda);
+    botaoPublicar.setAttribute("aria-busy", "true");
+}
+
+function botaoPronto() {
+    botaoPublicar.disabled = false;
+    botaoPublicar.removeAttribute("aria-busy");
+    botaoPublicar.innerHTML = htmlBotao;
+}
+
 // Formulário "Nova sugestão"
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();                       // não recarrega a página
@@ -176,6 +197,7 @@ formulario.addEventListener("submit", async (evento) => {
     const rotulos = { jogabilidade: "Jogabilidade", personagens: "Personagens",
                     interface: "Interface", graficos: "Gráficos", outros: "Outros" };
 
+    botaoCarregando();
     try {
         await publicarSugestao({
             titulo,
@@ -186,6 +208,8 @@ formulario.addEventListener("submit", async (evento) => {
     } catch (e) {
         alert(e.message);
         return;
+    } finally {
+        botaoPronto();
     }
 
     formulario.reset();

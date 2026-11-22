@@ -750,7 +750,7 @@ img {
 
 .sugestoes-form {
     position: sticky;
-    top: 0;
+    top: -24px;
 }
 
 .contador {
@@ -2628,3 +2628,12 @@ img {
 
 /* a rodinha dentro do card grande do início ocupa a largura toda */
 .destaque > .carregando { grid-column: 1 / -1; }
+
+/* versão pequena da rodinha, para caber dentro de botões */
+.rodinha-botao {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.35);
+    border-top-color: var(--branco);
+}
