@@ -99,10 +99,36 @@
                             <svg class="icone"><use href="#i-busca"/></svg>
                             <input type="search" placeholder="Buscar sugestões...">
                         </label>
-                        <button type="button" class="botao-filtros">
+
+                        <button type="button" class="botao-filtros" id="botao-filtros" aria-expanded="false" aria-controls="painel-filtros">
                             <svg class="icone"><use href="#i-filtro"/></svg> Filtros
+                            <span class="filtros-contagem" id="filtros-contagem" hidden>0</span>
                         </button>
+
+                        <div class="filtros-ancora">
+                            <div class="painel-filtros" id="painel-filtros" role="dialog" aria-label="Filtros" hidden>
+                                <div class="painel-filtros-content">
+                                    <fieldset class="filtro-grupo">
+                                        <legend>Ordenar por</legend>
+                                        <label class="filtro-opcao"><input type="radio" name="filtro-ordem" value="recentes" checked><span>Recentes</span></label>
+                                        <label class="filtro-opcao"><input type="radio" name="filtro-ordem" value="curtidas"><span>Mais curtidas</span></label>
+                                    </fieldset>
+
+                                    <fieldset class="filtro-grupo">
+                                        <legend>Categorias</legend>
+                                        <label class="filtro-opcao"><input type="checkbox" name="filtro-categoria" value="jogabilidade"><span>Jogabilidade</span></label>
+                                        <label class="filtro-opcao"><input type="checkbox" name="filtro-categoria" value="personagens"><span>Personagens</span></label>
+                                        <label class="filtro-opcao"><input type="checkbox" name="filtro-categoria" value="interface"><span>Interface</span></label>
+                                        <label class="filtro-opcao"><input type="checkbox" name="filtro-categoria" value="graficos"><span>Gráficos</span></label>
+                                        <label class="filtro-opcao"><input type="checkbox" name="filtro-categoria" value="outros"><span>Outros</span></label>
+                                    </fieldset>
+                                </div>
+                                <button type="button" class="filtros-limpar" id="filtros-limpar">Limpar filtros</button>
+                            </div>
+                        </div>
+
                     </div>
+
                 </section>
 
                 <div class="sugestoes-grade">
