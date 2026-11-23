@@ -43,3 +43,35 @@ if (formCriar) {
         }
     });
 }
+
+// "Esqueci minha senha" (só existe na tela de login)
+const linkRecuperar = document.getElementById("link-recuperar");
+const caixaRecuperar = document.getElementById("recuperar-senha");
+const formRecuperar = document.getElementById("form-recuperar");
+
+if (linkRecuperar && caixaRecuperar && formRecuperar) {
+    linkRecuperar.addEventListener("click", (e) => {
+        e.preventDefault();
+        formLogin.hidden = true;
+        caixaRecuperar.hidden = false;
+    });
+
+    document.getElementById("link-voltar-login").addEventListener("click", (e) => {
+        e.preventDefault();
+        caixaRecuperar.hidden = true;
+        formLogin.hidden = false;
+    });
+
+    formRecuperar.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const f = new FormData(formRecuperar);
+        try {
+            await enviarAuth({ acao: "recuperar", email: f.get("email").trim() });
+            alert("Se este e-mail estiver cadastrado, você receberá um link para redefinir a senha.");
+            formLogin.hidden = false;
+            caixaRecuperar.hidden = true;
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+}

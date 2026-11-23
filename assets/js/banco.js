@@ -111,3 +111,8 @@ export function normalizarUpdates(lista) {
 export function publicarUpdate(envio) {
     return chamarApi({ method: "POST", body: envio }, API_UPDATES);
 }
+
+// DELETE: exclui um update (só admin)
+export function excluirUpdate(id) {
+    return chamarApi({ method: "DELETE" }, `${API_UPDATES}?id=${encodeURIComponent(id)}`);
+}

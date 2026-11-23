@@ -38,6 +38,17 @@ try {
         responder($publicados);
     }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        if (!perfilUsuario($uid)['admin']) responder(['erro' => 'Só administradores'], 403);
+
+        $id = $_GET['id'] ?? null;
+        if (!$id) responder(['erro' => 'Falta o id'], 400);
+        if (!buscarRegistros('updates', $id)) responder(['erro' => 'Update não encontrado'], 404);
+
+        deletarRegistro('updates', $id);
+        responder(['ok' => true]);
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!perfilUsuario($uid)['admin']) responder(['erro' => 'Só administradores'], 403);
 

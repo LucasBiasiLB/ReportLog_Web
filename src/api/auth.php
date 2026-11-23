@@ -41,6 +41,23 @@ try {
         $corpo = json_decode(file_get_contents('php://input'), true) ?? [];
         $acao  = $corpo['acao'] ?? '';
 
+        // "Esqueci minha senha": pede ao Firebase para enviar o link de redefinição.
+        // Se o e-mail não existir, responde ok mesmo assim (não revela quem tem conta)
+        if ($acao === 'recuperar') {
+            $email = trim($corpo['email'] ?? '');
+            if ($email === '') responder(['erro' => 'Informe o e-mail'], 400);
+
+            try {
+                identityRequest('accounts:sendOobCode', [
+                    'requestType' => 'PASSWORD_RESET',
+                    'email'       => $email,
+                ]);
+            } catch (Exception $e) {
+                if (!str_contains($e->getMessage(), 'EMAIL_NOT_FOUND')) throw $e;
+            }
+            responder(['ok' => true]);
+        }
+
         if ($acao === 'login' || $acao === 'registrar') {
             $email = trim($corpo['email'] ?? '');
             $senha = $corpo['senha'] ?? '';

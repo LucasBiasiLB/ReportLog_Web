@@ -39,10 +39,26 @@
 
                 <button type="submit" class="botao botao-largo auth-entrar">Entrar</button>
 
-                <a href="#" class="auth-link-centro">Esqueci minha senha</a>
+                <a href="#" class="auth-link-centro" id="link-recuperar">Esqueci minha senha</a>
 
                 <a href="criar-conta.html" class="botao-contorno">Criar conta</a>
             </form>
+
+            <!-- Troca o formulário de login por este quando clica em "Esqueci minha senha" -->
+            <div id="recuperar-senha" hidden>
+                <p class="auth-subtitulo">Informe seu e-mail para receber o link de redefinição de senha.</p>
+
+                <form class="auth-form" id="form-recuperar">
+                    <label class="auth-campo">
+                        <span>E-mail</span>
+                        <input type="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+                    </label>
+
+                    <button type="submit" class="botao botao-largo auth-entrar">Enviar link</button>
+
+                    <a href="#" class="auth-link-centro" id="link-voltar-login">Voltar ao login</a>
+                </form>
+            </div>
         </main>
 
         <footer class="auth-rodape">Reportlog · Jogo de vôlei em pixel art</footer>
