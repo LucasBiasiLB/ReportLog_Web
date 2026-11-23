@@ -219,4 +219,37 @@ formulario.addEventListener("submit", async (evento) => {
     await desenharLista();
 });
 
+// Botão "atualizar": busca de novo no servidor e redesenha a lista.
+// Enquanto busca, o ícone vira a mesma rodinha usada no botão de publicar.
+const botaoRefresh = document.getElementById("btn-refresh");
+const htmlRefresh = botaoRefresh.innerHTML;
+
+function refreshCarregando() {
+    botaoRefresh.disabled = true;
+    botaoRefresh.innerHTML = "";
+    const roda = document.createElement("span");
+    roda.className = "rodinha rodinha-botao";
+    roda.setAttribute("role", "status");
+    roda.setAttribute("aria-label", "Atualizando");
+    botaoRefresh.append(roda);
+    botaoRefresh.setAttribute("aria-busy", "true");
+}
+
+function refreshPronto() {
+    botaoRefresh.disabled = false;
+    botaoRefresh.removeAttribute("aria-busy");
+    botaoRefresh.innerHTML = htmlRefresh;
+}
+
+botaoRefresh.addEventListener("click", async () => {
+    refreshCarregando();
+    try {
+        await desenharLista();
+    } catch (e) {
+        alert(e.message);
+    } finally {
+        refreshPronto();
+    }
+});
+
 carregarComCache("sugestoes", buscarSugestoesBruto, mostrarSugestoes, lista).catch(console.error);
