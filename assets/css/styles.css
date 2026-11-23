@@ -320,7 +320,7 @@ img {
 
 .destaque {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     margin-top: 22px;
     min-height: 250px;
     overflow: hidden;
@@ -443,7 +443,7 @@ img {
 
 .cartoes {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 }
 
@@ -732,7 +732,7 @@ img {
 /* duas colunas: lista (maior) + formulário (menor) */
 .sugestoes-grade {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: minmax(0, 1fr) 340px;
     gap: 24px;
     align-items: start;
 }
@@ -1067,26 +1067,17 @@ img {
 }
 
 .video-espaco {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     flex: 1.2;
-    min-height: 220px;
-    border: 1px dashed var(--borda);
+    min-width: 0;          /* deixa a caixa encolher junto com a tela */
+    aspect-ratio: 16 / 9;  /* o vídeo sempre fica na proporção certa */
+    overflow: hidden;
+    border: 1px solid var(--borda);
     border-radius: var(--raio);
     background: var(--fundo);
-    color: var(--cinza);
-    font-size: 12px;
-}
-
-.video-espaco .icone {
-    width: 36px;
-    height: 36px;
 }
 
 .video-espaco iframe {
+    display: block;
     width: 100%;
     height: 100%;
     border: 0;
@@ -1121,7 +1112,7 @@ img {
     }
 
     .destaque {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .destaque-imagem {
@@ -1130,11 +1121,11 @@ img {
     }
 
     .cartoes {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .sugestoes-grade {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .cabecalho-ferramentas {
@@ -1158,6 +1149,11 @@ img {
 
     .bloco-logo {
         margin: 0 auto;
+    }
+
+    .video-espaco {
+        flex: none;
+        width: 100%;
     }
 }
 
@@ -1582,6 +1578,7 @@ img {
    com largura própria, alinhado à esquerda. */
 .cartao-sugestao-destaque {
     max-width: 760px;
+    
 }
 
 /* ====================================================== */
@@ -1890,6 +1887,10 @@ img {
 
 .sugestao-top .sugestao-base { justify-content: space-between; align-items: center; }
 .sugestao-curtidas { display: inline-flex; align-items: center; gap: 6px; }
+
+.sugestao-top .sugestao-texto {
+    margin: 12px 0 16px;   /* cima | baixo: aumente ou diminua à vontade */
+}
 
 .perfil-banner img,
 .editar-banner img {
@@ -2309,7 +2310,7 @@ img {
 
 .campo-duplo {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 14px;
 }
 
@@ -2682,7 +2683,7 @@ img {
     }
 
     .campo-duplo {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .ver-banner {
@@ -2797,4 +2798,66 @@ img {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+}
+
+.circulo{
+    border-radius: 50%;
+}
+
+/* ====================================================== */
+/* ========== TEXTO COMPRIDO NÃO PASSA DO CARD ========== */
+/* ====================================================== */
+
+/* Textos dos cards: palavra grande demais quebra de linha em vez de vazar */
+.destaque-texto,
+.destaque h2,
+.destaque-descricao,
+.cartao-corpo h3,
+.cartao-corpo p,
+.cartao-texto h3,
+.cartao-texto p,
+.sugestao-autor strong,
+.sugestao-autor small,
+.sugestao-texto h3,
+.sugestao-texto p,
+.sugestao-linha-texto h3,
+.sugestao-linha-texto p,
+.update-linha-texto h3,
+.update-linha-texto p,
+.novidade-texto strong,
+.novidade-texto p,
+.markdown p,
+.perfil-nome,
+.perfil-bio,
+.editar-linha-texto,
+.rascunho-info strong {
+    overflow-wrap: anywhere;
+}
+
+/* Dentro de um flex, o filho só encolhe se tiver min-width: 0 */
+.destaque-texto,
+.sugestao-autor,
+.sugestao-texto,
+.novidade-texto {
+    min-width: 0;
+}
+
+.sugestao-texto,
+.novidade-texto {
+    flex: 1;
+}
+
+/* O selo da categoria e o ícone não devem ser espremidos pelo texto */
+.categoria-selo,
+.sugestao-icone {
+    flex-shrink: 0;
+}
+
+/* Textos dentro dos cards da grade também respeitam a largura do card */
+.cartao,
+.sugestao,
+.sugestao-linha,
+.update-linha {
+    min-width: 0;
+    max-width: 100%;
 }
