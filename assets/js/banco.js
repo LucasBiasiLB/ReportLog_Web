@@ -58,6 +58,15 @@ export async function alternarCurtida(id) {
     });
 }
 
+// POST: edita uma sugestão (só o dono ou admin; o servidor confere)
+export async function editarSugestao(id, dados) {
+    return chamarApi({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ acao: "editar", id, dados })
+    });
+}
+
 // DELETE: exclui uma sugestão
 export async function excluirSugestao(id) {
     return chamarApi({ method: "DELETE" }, `${API}?id=${encodeURIComponent(id)}`);

@@ -263,8 +263,19 @@ function CartaoSugestaoLinha(dados, acoes) {
         meta
     );
 
-    // Lado direito: lixeira (a sugestão é do próprio usuário) e a setinha
+    // Lado direito: editar, lixeira (a sugestão é do próprio usuário) e a setinha
     const lado = el("div", "sugestao-linha-acoes");
+    if (acoes.aoEditar) {
+        const editar = el("button", "sugestao-linha-editar");
+        editar.type = "button";
+        editar.setAttribute("aria-label", "Editar sugestão");
+        editar.append(icone("editar"));
+        editar.addEventListener("click", (evento) => {
+            evento.stopPropagation();           // não abre a sugestão junto
+            acoes.aoEditar(dados);
+        });
+        lado.append(editar);
+    }
     if (acoes.aoExcluir) {
         const excluir = el("button", "sugestao-linha-excluir");
         excluir.type = "button";
