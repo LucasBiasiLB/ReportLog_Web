@@ -747,37 +747,6 @@ img {
     color: var(--branco);
 }
 
-/* Botão quadrado pequeno (ex.: atualizar lista de sugestões) */
-.btn-secundario {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    margin-right: 8px;
-    padding: 0;
-    border: 1px solid var(--borda);
-    border-radius: 8px;
-    background: var(--cartao);
-    color: var(--azul-claro);
-    transition: filter 0.2s, border-color 0.2s;
-}
-
-.btn-secundario:hover:not(:disabled) {
-    filter: brightness(1.2);
-    border-color: var(--azul);
-}
-
-.btn-secundario:disabled {
-    cursor: wait;
-    opacity: 0.7;
-}
-
-.btn-secundario .icone {
-    width: 15px;
-    height: 15px;
-}
-
 .sugestao {
     padding: 18px 20px;
     border: 1px solid var(--azul);
@@ -2506,8 +2475,7 @@ img {
     color: var(--azul-claro);
 }
 
-.sugestao-linha-excluir,
-.sugestao-linha-editar {
+.sugestao-linha-excluir {
     display: grid;
     place-items: center;
     width: 32px;
@@ -2518,15 +2486,9 @@ img {
     color: var(--vermelho);
 }
 
-.sugestao-linha-editar {
-    color: var(--azul-claro);
-}
-
 .sugestao-linha-excluir:hover,
-.sugestao-linha-editar:hover,
-.sugestao-linha-excluir:focus-visible,
-.sugestao-linha-editar:focus-visible {
-    border-color: currentColor;
+.sugestao-linha-excluir:focus-visible {
+    border-color: var(--vermelho);
     outline: 0;
 }
 
@@ -2590,7 +2552,7 @@ img {
     border: 4px solid var(--cartao);
     border-top-color: var(--azul-claro);
     border-radius: 50%;
-    animation: girar 0.8s ease-in infinite;
+    animation: girar 0.8s ease-in-out infinite;
 }
 
 @keyframes girar { to { transform: rotate(360deg); } }
@@ -2616,8 +2578,8 @@ img {
     width: 16px;
     height: 16px;
     border-width: 2px;
-    border: 2px solid var(--azul-claro);
-    border-top-color: var(--cartao);
+    border-color: rgba(255, 255, 255, 0.35);
+    border-top-color: var(--branco);
 }
 
 /* ---------- Rascunhos de update (só admin, só local) ---------- */
@@ -2721,4 +2683,17 @@ img {
 .update-linha {
     min-width: 0;
     max-width: 100%;
+}
+
+/* ---------- Janela "Visualizar update": título, descrição e detalhes ---------- */
+.ver-titulo,
+.ver-descricao,
+.detalhes,
+.md-titulo,
+.md-item {
+    overflow-wrap: anywhere;
+}
+
+.janela-corpo > * {
+    min-width: 0;
 }
