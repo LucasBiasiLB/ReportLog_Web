@@ -143,6 +143,18 @@
                     </div>
                     <div id="sugestao-top"></div>
                 </section>
+
+                <!-- Rascunhos de update: só neste navegador e só para o admin logado.
+                     Quem monta a lista é o pagina-inicio.js -->
+                <section id="secao-rascunhos" hidden>
+                    <div class="secao-topo">
+                        <div>
+                            <p class="secao-rotulo">ADMIN</p>
+                            <h2 class="secao-titulo">Rascunhos de update</h2>
+                        </div>
+                    </div>
+                    <div class="rascunhos" id="lista-rascunhos"></div>
+                </section>
             </main>
         </div>
     </div>
@@ -291,17 +303,17 @@
                 </div>
                 <label class="campo">
                     <span>Título da novidade <em class="obrigatorio">*</em></span>
-                    <input type="text" name="novidade-titulo" maxlength="40" placeholder="Ex: Novos eventos">
+                    <input type="text" name="novidade-titulo[]" maxlength="40" placeholder="Ex: Novos eventos">
                     <small>0/40</small>
                 </label>
                 <label class="campo">
                     <span>Descrição da novidade <em class="obrigatorio">*</em></span>
-                    <input type="text" name="novidade-descricao" maxlength="100" placeholder="Ex: Participe de eventos especiais e ganhe recompensas!">
+                    <input type="text" name="novidade-descricao[]" maxlength="100" placeholder="Ex: Participe de eventos especiais e ganhe recompensas!">
                     <small>0/100</small>
                 </label>
                 <label class="campo">
                     <span>Ícone</span>
-                    <select name="novidade-icone">
+                    <select name="novidade-icone[]">
                         <option value="atck">Ataque</option>
                         <option value="def">Defesa</option>
                         <option value="mov">Movimentação</option>

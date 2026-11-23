@@ -58,7 +58,7 @@ try {
                     'nome'       => $nome,
                     'email'      => $email,
                     'fotoPerfil' => null,
-                    'admin'      => false,
+                    'papel'      => 'usuario',
                     'createdAt'  => timestamp(),
                 ], $r['localId']);
             } else {

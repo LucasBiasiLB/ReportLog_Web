@@ -21,7 +21,8 @@ function cacheGravar(chave, dados) {
 function cacheLimparTudo() {
     try {
         Object.keys(localStorage)
-            .filter((k) => k.startsWith(CACHE_PREFIXO))
+            // "rascunhos-update" fica de fora: é rascunho do admin, não cache de leitura
+            .filter((k) => k.startsWith(CACHE_PREFIXO) && !k.includes("rascunhos-update"))
             .forEach((k) => localStorage.removeItem(k));
     } catch { /* ignora */ }
 }

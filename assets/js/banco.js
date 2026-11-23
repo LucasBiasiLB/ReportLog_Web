@@ -97,3 +97,8 @@ export function normalizarUpdates(lista) {
                     paraMs(b.quando) - paraMs(a.quando) ||          // 1º: dataAtualizacao
                     paraMs(b.createdAt) - paraMs(a.createdAt));     // empate: o criado por último
 }
+
+// POST multipart: publica um update (só admin; o servidor valida)
+export function publicarUpdate(envio) {
+    return chamarApi({ method: "POST", body: envio }, API_UPDATES);
+}

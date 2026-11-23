@@ -2757,3 +2757,44 @@ img {
     border-color: rgba(255, 255, 255, 0.35);
     border-top-color: var(--branco);
 }
+
+/* ---------- Rascunhos de update (só admin, só local) ---------- */
+
+.rascunhos {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.rascunho-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 14px 16px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--cartao);
+}
+
+.rascunho-info {
+    min-width: 200px;
+}
+
+.rascunho-info strong {
+    display: block;
+    color: var(--branco);
+}
+
+.rascunho-info small {
+    display: block;
+    margin-top: 4px;
+    color: var(--cinza);
+}
+
+.rascunho-acoes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}

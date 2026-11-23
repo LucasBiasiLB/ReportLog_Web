@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReportLog | Login</title>
+    <base href="/ReportLog_Web/src/tabs/">
     <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body class="auth">
@@ -24,7 +25,7 @@
             <h1 class="auth-titulo">LOGIN</h1>
             <p class="auth-subtitulo">Entre para acompanhar os updates do Reportlog.</p>
 
-            <form class="auth-form" id="form-login">
+            <form class="auth-form" id="form-login" action="login" method="post">
 
                 <label class="auth-campo">
                     <span>E-mail</span>
@@ -47,7 +48,7 @@
         <footer class="auth-rodape">Reportlog · Jogo de vôlei em pixel art</footer>
     </div>
 
-
+    <script src="../../assets/js/cache.js"></script>
     <script src="../../assets/js/sessao.js"></script>
     <script src="../../assets/js/pagina-login.js"></script>
 </body>

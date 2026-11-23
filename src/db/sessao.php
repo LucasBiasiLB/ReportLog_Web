@@ -22,6 +22,6 @@ function perfilUsuario($uid) {
         'descricao'  => $u['descricao'] ?? '',
         'fotoPerfil' => $u['fotoPerfil'] ?? $u['foto'] ?? $u['avatar'] ?? null,
         'fotoCapa'   => $u['fotoCapa'] ?? null,
-        'admin'      => !empty($u['admin']),
+        'admin'      => ($u['papel'] ?? '') === 'admin' || !empty($u['admin']),
     ];
 }
