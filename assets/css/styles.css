@@ -2682,7 +2682,8 @@ img {
     color: var(--azul-claro);
 }
 
-.sugestao-linha-excluir {
+.sugestao-linha-excluir,
+.sugestao-linha-editar {
     display: grid;
     place-items: center;
     width: 32px;
@@ -2693,9 +2694,15 @@ img {
     color: var(--vermelho);
 }
 
+.sugestao-linha-editar {
+    color: var(--azul-claro);
+}
+
 .sugestao-linha-excluir:hover,
-.sugestao-linha-excluir:focus-visible {
-    border-color: var(--vermelho);
+.sugestao-linha-editar:hover,
+.sugestao-linha-excluir:focus-visible,
+.sugestao-linha-editar:focus-visible {
+    border-color: currentColor;
     outline: 0;
 }
 

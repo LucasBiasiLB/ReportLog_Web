@@ -77,6 +77,33 @@ try {
             responder(enriquecerSugestao(adicionarRegistro($colecao, $novo)));
         }
 
+        if ($acao === 'editar') {
+            $idSug = $corpo['id'] ?? null;
+            $dados = $corpo['dados'] ?? [];
+            if (!$idSug) responder(['erro' => 'Falta o id'], 400);
+
+            $s = buscarRegistros($colecao, $idSug);
+            if (!$s) responder(['erro' => 'Sugestão não encontrada'], 404);
+            if (($s['uid'] ?? null) !== $uid && !perfilUsuario($uid)['admin']) {
+                responder(['erro' => 'Você não pode editar esta sugestão'], 403);
+            }
+
+            $titulo = trim($dados['titulo'] ?? '');
+            $desc   = trim($dados['descricao'] ?? '');
+            if ($titulo === '' || $desc === '') {
+                responder(['erro' => 'Título e descrição são obrigatórios'], 400);
+            }
+
+            // Só estes campos podem mudar; curtidas, uid e datas ficam como estão
+            $campos = [
+                'titulo'    => mb_substr($titulo, 0, 50),
+                'descricao' => mb_substr($desc, 0, 500),
+                'categoria' => $dados['categoria'] ?? $s['categoria'] ?? 'Outros',
+                'icon'      => $dados['icon'] ?? $s['icon'] ?? 'logo',
+            ];
+            responder(enriquecerSugestao(atualizarRegistro($colecao, $idSug, $campos)));
+        }
+
         if ($acao === 'curtir') {
             $idSug = $corpo['id'] ?? null;
             if (!$idSug) responder(['erro' => 'Falta o id'], 400);
