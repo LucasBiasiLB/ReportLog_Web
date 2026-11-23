@@ -834,22 +834,14 @@ img {
     border-top: 1px solid var(--borda);
 }
 
-.curtir,
-.excluir {
+.curtir {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     background: none;
     border: 0;
     font-weight: 600;
-}
-
-.curtir {
     color: var(--azul);
-}
-
-.excluir {
-    color: var(--vermelho);
 }
 
 .dica {
@@ -2476,19 +2468,40 @@ img {
 }
 
 .sugestao-linha-excluir {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 50%;
     width: 32px;
     height: 32px;
-    border: 1px solid transparent;
-    border-radius: 8px;
     background: transparent;
     color: var(--vermelho);
+    transition: border-color 0.2s;
 }
 
 .sugestao-linha-excluir:hover,
 .sugestao-linha-excluir:focus-visible {
     border-color: var(--vermelho);
+    outline: 0;
+}
+
+.sugestao-linha-editar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    color: var(--azul-claro);
+    transition: border-color 0.2s;
+}
+
+.sugestao-linha-editar:hover,
+.sugestao-linha-editar:focus-visible {
+    border-color: var(--azul-claro);
     outline: 0;
 }
 
@@ -2578,8 +2591,40 @@ img {
     width: 16px;
     height: 16px;
     border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.35);
-    border-top-color: var(--branco);
+    border-color: var(--borda);
+    border-top-color: var(--azul-claro);
+}
+
+.refresh-btn {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    background: var(--cartao);
+    border: 1px solid var(--borda);
+    border-radius: 25%;
+    cursor: pointer;
+    padding: 4px;
+    
+}
+
+.refresh-icon{
+    width: 16px;
+    height: 16px;
+    color: var(--azul-claro)
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ---------- Rascunhos de update (só admin, só local) ---------- */
