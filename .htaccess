@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^$ src/tabs/index.html [L]
+RewriteRule ^src/?$ src/tabs/index.html [L]

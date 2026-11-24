@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportLog | Editar perfil</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="icon" type="image/png" href="../../assets/icons/logo.png">
+</head>
+<body>
+
+    <!-- Ícones usados na página. Cada um é chamado depois com <use href="#nome"> -->
+    <svg width="0" height="0" aria-hidden="true">
+        <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+        <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+
+        <symbol id="i-sair" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+        <symbol id="i-direita" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+        <symbol id="i-editar" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+        <symbol id="i-ideia" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol>
+        <symbol id="i-imagem" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+        <!-- Novos, usados só nesta tela -->
+        <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+        <symbol id="i-paleta" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 10-10c0 3-2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15.5" cy="7.5" r="1"/></symbol>
+        <symbol id="i-documento" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+    </svg>
+
+    <div class="pagina">
+
+        <!-- ========== MENU LATERAL ========== -->
+        <aside class="menu-lateral" id="menu-lateral">
+
+            <div class="marca">
+                <img src="../../assets/image/logo.png" alt="" class="marca-logo">
+                <p class="marca-nome">ReportLog</p>
+            </div>
+
+            <hr class="linha">
+
+            <!-- Nesta tela a aba ativa é "Usuário" (editar perfil faz parte dela) -->
+            <nav class="menu-links">
+                <a href="index.html" class="menu-link">
+                    <svg class="icone"><use href="#i-inicio"/></svg> Início
+                </a>
+                <a href="sugestoes.html" class="menu-link">
+                    <svg class="icone"><use href="#i-ideia"/></svg> Sugestões
+                </a>
+                <a href="usuario.html" class="menu-link ativo">
+                    <svg class="icone"><use href="#i-usuario"/></svg> Usuário
+                </a>
+                <a href="sobre-nos.html" class="menu-link">
+                    <svg class="icone"><use href="#i-info"/></svg> Sobre nós
+                </a>
+            </nav>
+
+            <div class="menu-rodape">
+                <button type="button" class="botao-sair">
+                    <svg class="icone"><use href="#i-sair"/></svg> Sair
+                </button>
+                <p class="versao">v1.0.0</p>
+            </div>
+        </aside>
+
+        <!-- ========== CONTEÚDO ========== -->
+        <div class="conteudo">
+
+            <!-- Barra do topo -->
+            <header class="topo">
+                <button type="button" class="botao-menu" id="botao-menu" aria-label="Abrir menu" aria-expanded="false">
+                    <svg class="icone"><use href="#i-menu"/></svg>
+                </button>
+
+                <p class="topo-frase topo-frase-icone">
+                    <svg class="icone"><use href="#i-editar"/></svg> Editar perfil
+                </p>
+
+
+            </header>
+
+            <main class="principal">
+
+                <!-- Título da página -->
+                <div class="editar-titulo">
+                    <h1 class="editar-h1">Editar perfil</h1>
+                    <p class="subtitulo-pagina">Personalize sua conta no ReportLog!</p>
+                </div>
+
+                <!-- Card grande com tudo. Ainda sem função: o onsubmit="return false"
+                    impede o envio. É no id="form-editar-perfil" que o "Salvar" será ligado. -->
+                <form class="editar-card" id="form-editar-perfil">
+
+                    <!-- 1) Banner com a foto de perfil no meio -->
+                    <section class="editar-capa">
+                        <button type="button" aria-label="Trocar banner" class="editar-banner-btn">
+                            <img src="../../assets/image/banner.png" alt="" class="editar-banner">
+                        </button>
+                        <div class="editar-avatar-area">
+                            <img src="../../assets/image/avatar.png" alt="Foto de perfil" class="editar-avatar">
+                            <button type="button" class="editar-camera" aria-label="Trocar foto de perfil">
+                                <svg class="icone"><use href="#i-camera"/></svg>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- 2) Botão da foto padrão -->
+                    <button type="button" class="editar-linha" id="btn-foto-padrao">
+                        <span class="editar-icone"><svg class="icone"><use href="#i-imagem"/></svg></span>
+                        <span class="editar-linha-texto">Foto do perfil padrão</span>
+                        <svg class="icone editar-linha-seta"><use href="#i-direita"/></svg>
+                    </button>
+
+                    <!-- 3) Linha do plano de fundo -->
+                    <button type="button" class="editar-linha" id="btn-capa-padrao">
+                        <span class="editar-icone"><svg class="icone"><use href="#i-paleta"/></svg></span>
+                        <span class="editar-linha-texto">Plano de fundo padrão</span>
+                        <svg class="icone editar-linha-seta"><use href="#i-direita"/></svg>
+                    </button>
+
+                    <!-- 4) Nome de usuário (o contador 8/24 é atualizado pelo scripts.js) -->
+                    <div class="campo editar-campo">
+                        <div class="editar-campo-caixa">
+                            <label for="campo-nome" class="editar-rotulo">Nome de usuário</label>
+                            <div class="editar-campo-linha">
+                                <span class="editar-icone"><svg class="icone"><use href="#i-usuario"/></svg></span>
+                                <input type="text" id="campo-nome" name="nome" maxlength="24" value="" placeholder="Como você quer ser chamado?">
+                            </div>
+                        </div>
+                        <small>8/24</small>
+                    </div>
+
+                    <!-- 5) Breve descrição -->
+                    <div class="campo editar-campo">
+                        <div class="editar-campo-caixa">
+                            <label for="campo-bio" class="editar-rotulo">Breve descrição</label>
+                            <div class="editar-campo-linha">
+                                <span class="editar-icone"><svg class="icone"><use href="#i-documento"/></svg></span>
+                                <textarea id="campo-bio" name="bio" maxlength="100" rows="3" placeholder="Conte um pouco sobre você..."></textarea>
+                            </div>
+                        </div>
+                        <small>0/100</small>
+                    </div>
+
+                    <!-- 6) Salvar -->
+                    <button type="submit" class="editar-salvar">
+                        <svg class="icone"><use href="#i-check"/></svg> Salvar alterações
+                    </button>
+                </form>
+            </main>
+
+            <footer class="rodape">ReportLog • IFPR 2026</footer>
+        </div>
+    </div>
+
+    <script src="../../assets/js/cache.js"></script>
+    <script src="../../assets/js/sessao.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/util.js"></script>
+
+    <script type="module" src="../../assets/js/pagina-editar-perfil.js"></script>
+</body>
+</html>

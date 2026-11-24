@@ -1,0 +1,27 @@
+<?php
+require_once 'seguranca.php';
+seguranca();
+function iniciarSessao() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax']);
+        session_start();
+    }
+}
+
+function uidLogado() {
+    iniciarSessao();
+    return $_SESSION['uid'] ?? null;
+}
+
+// Dados do usuário que o front-end precisa (vêm da coleção 'usuarios', id = uid)
+function perfilUsuario($uid) {
+    $u = buscarRegistros('usuarios', $uid) ?? [];
+    return [
+        'id'         => $uid,
+        'nome'       => $u['nome'] ?? $u['name'] ?? 'Anônimo',
+        'descricao'  => $u['descricao'] ?? '',
+        'fotoPerfil' => $u['fotoPerfil'] ?? $u['foto'] ?? $u['avatar'] ?? null,
+        'fotoCapa'   => $u['fotoCapa'] ?? null,
+        'admin'      => ($u['papel'] ?? '') === 'admin' || !empty($u['admin']),
+    ];
+}
