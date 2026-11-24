@@ -217,6 +217,7 @@ formulario.addEventListener("submit", async (evento) => {
         s.textContent = "0/" + s.textContent.split("/")[1];   // zera os contadores
     });
     await desenharLista();
+    document.getElementById("janela-nova-sugestao")?.close();
 });
 
 // Botão "atualizar": busca de novo no servidor e redesenha a lista.

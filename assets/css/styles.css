@@ -572,6 +572,7 @@ img {
 .subtitulo-pagina {
     font-size: 0.875rem;
     color: var(--azul-claro);
+    margin-top: 10px;
 }
 
 /* ---------- Usuário ---------- */
@@ -3346,5 +3347,278 @@ body {
         width: 2.5rem;
         height: 2.5rem;
         flex-basis: 2.5rem;
+    }
+}
+
+
+/* ==========================================================
+   REFINOS DE LAYOUT — LISTA DE UPDATES, SUGESTÕES E TOPO
+   ========================================================== */
+
+/* Mantém o início do conteúdo alinhado ao topo real da janela. */
+html, body, .pagina, .conteudo {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.conteudo {
+    background-position: right top;
+    background-attachment: scroll;
+}
+
+/* CORREÇÃO DA FAIXA ESCURA NO TOPO:
+   O <svg width="0" height="0"> com os ícones fica solto no <body>. Por ser um
+   elemento "inline", o navegador cria uma linha de texto invisível (~23px, que
+   é o line-height do body) antes do .conteudo e empurra tudo para baixo. Essa
+   linha mostra só a cor de fundo do site (a "faixa preta") e some ao rolar.
+   Tirando o sprite do fluxo da página, ele continua funcionando (<use href="#...">)
+   mas não ocupa mais espaço. */
+body > svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.topo {
+    margin-top: 0;
+    border-top: 0;
+}
+
+/* A barra de ferramentas aceita o novo botão sem apertar a busca. */
+.cabecalho-ferramentas {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.botao-nova-sugestao {
+    gap: 8px;
+}
+
+/* O botão "Nova sugestão" só aparece em telas pequenas (celular).
+   Em telas grandes ele fica escondido; o display volta no @media (max-width: 700px) abaixo.
+   O seletor tem 2 classes para ganhar da regra genérica .botao. */
+.cabecalho-ferramentas .botao-nova-sugestao {
+    display: none;
+}
+
+/* Formulário de sugestão abre como janela central, independente do tamanho da lista. */
+.janela-sugestao {
+    width: min(560px, calc(100vw - 28px));
+    max-width: calc(100vw - 28px);
+    max-height: min(88dvh, 850px);
+    overflow: auto;
+    padding: 0;
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    background: var(--cartao);
+    color: var(--texto);
+}
+
+.janela-sugestao::backdrop {
+    background: rgba(2, 8, 15, 0.78);
+    backdrop-filter: blur(3px);
+}
+
+.janela-sugestao .sugestoes-form {
+    position: static;
+    width: 100%;
+    padding: clamp(16px, 3vw, 24px);
+}
+
+.janela-sugestao .formulario {
+    width: 100%;
+}
+
+.janela-sugestao .formulario-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.janela-sugestao .formulario-topo > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.janela-sugestao .janela-fechar {
+    flex: 0 0 36px;
+}
+
+/* Em celular, cada update vira um card vertical: imagem acima, texto abaixo. */
+@media (max-width: 700px) {
+    .update-linha {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .update-linha-imagem {
+        width: 100%;
+        height: clamp(130px, 42vw, 220px);
+        min-height: 130px;
+        border-radius: 11px;
+    }
+
+    .update-linha-imagem img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .update-linha-texto {
+        width: 100%;
+    }
+
+    .update-linha-texto h3 {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        line-height: 1.25;
+    }
+
+    .update-linha-texto p {
+        font-size: 0.875rem;
+        line-height: 1.45;
+        -webkit-line-clamp: 3;
+    }
+
+    .update-linha-acoes {
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: 2px;
+    }
+
+    .cabecalho-ferramentas {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .cabecalho-ferramentas .campo-busca {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .cabecalho-ferramentas .botao-filtros,
+    .cabecalho-ferramentas .botao-nova-sugestao {
+        min-height: 42px;
+        justify-content: center;
+    }
+
+    .cabecalho-ferramentas .filtros-ancora {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+}
+
+@media (max-width: 380px) {
+    .cabecalho-ferramentas {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cabecalho-ferramentas .campo-busca,
+    .cabecalho-ferramentas .filtros-ancora {
+        grid-column: 1;
+    }
+}
+
+/* ==========================================================
+   SUGESTÕES — FORMULÁRIO NA LATERAL (PC) x JANELA (CELULAR)
+   O mesmo formulário (<dialog id="janela-nova-sugestao">) é usado nos dois casos:
+   - telas grandes (acima de 900px): ele fica fixo na coluna da direita, sempre visível;
+   - telas pequenas (900px ou menos): fica escondido e abre como janela pelo botão "Nova sugestão".
+   O ponto de corte (900px) é o mesmo do menu em hambúrguer e da grade de 1 coluna.
+   ========================================================== */
+
+/* Telas pequenas: o botão "Nova sugestão" aparece */
+@media (max-width: 900px) {
+    .cabecalho-ferramentas .botao-nova-sugestao {
+        display: inline-flex;
+    }
+}
+
+/* Telas grandes: o <dialog> deixa de ser janela e vira a coluna da direita */
+@media (min-width: 901px) {
+    /* duas colunas: lista + formulário (340px) */
+    .sugestoes-grade {
+        grid-template-columns: minmax(0, 1fr) 340px;
+    }
+
+    /* <dialog> fechado é display:none por padrão; aqui forçamos a exibição */
+    .janela-sugestao {
+        display: block;
+        position: sticky;       /* acompanha a rolagem, como antes */
+        inset: auto;
+        top: 16px;              /* distância do topo da tela quando está "grudado" */
+        width: 100%;
+        max-width: none;
+        margin: 48px 0 0;       /* alinha com o título "Ideias dos jogadores" */
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+
+        /* ALTURA MÁXIMA = altura da tela. Se o formulário for maior que a tela
+           (telas baixas), ele rola POR DENTRO, assim o botão "Publicar" sempre
+           pode ser alcançado, mesmo com a lista de sugestões enorme. */
+        max-height: calc(100dvh - 32px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .janela-sugestao .sugestoes-form {
+        padding: 0;
+    }
+
+    /* versão mais compacta do formulário para caber em mais telas sem rolar */
+    .janela-sugestao .formulario {
+        margin-top: 0;          /* o espaço de cima agora está na própria janela */
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .janela-sugestao .campo textarea {
+        height: 84px;
+        min-height: 64px;
+    }
+
+    .janela-sugestao .campo > span,
+    .janela-sugestao .campo legend {
+        margin-bottom: 2px;
+    }
+
+    /* categorias e ícones um pouco menores, para ocuparem menos linhas */
+    .janela-sugestao .opcoes {
+        gap: 6px;
+    }
+
+    .janela-sugestao .opcao span {
+        padding: 6px 11px;
+    }
+
+    .janela-sugestao .icones-escolha {
+        gap: 4px;
+        justify-content: space-between;
+    }
+
+    .janela-sugestao .icone-opcao span {
+        width: 40px;
+        height: 40px;
+    }
+
+    .janela-sugestao .icone-opcao span img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* o botão X só faz sentido quando é janela */
+    .janela-sugestao .janela-fechar {
+        display: none;
     }
 }
