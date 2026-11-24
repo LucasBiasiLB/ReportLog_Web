@@ -243,12 +243,10 @@ function CartaoSugestaoLinha(dados, acoes) {
     linha.setAttribute("aria-label", "Ver sugestão: " + dados.titulo);
 
     // Ícone que o usuário escolheu (dados.icon guarda o NOME; ICONS traduz para o caminho)
-    const caixaIcone = el("div", "sugestao-linha-icone");
     const imgIcone = el("img", "icone-item");
     const chaveIcone = (dados.icon || "").replace("#", "");
     imgIcone.src = ICONS[chaveIcone] || ICONS.logo;
     imgIcone.alt = "";
-    caixaIcone.append(imgIcone);
 
     // Textos: categoria, título, descrição e (data + curtidas)
     const texto = el("div", "sugestao-linha-texto");
@@ -289,7 +287,7 @@ function CartaoSugestaoLinha(dados, acoes) {
     }
     lado.append(icone("direita"));
 
-    linha.append(caixaIcone, texto, lado);
+    linha.append(imgIcone, texto, lado);
     linha.addEventListener("click", () => acoes.aoAbrir(dados));
     linha.addEventListener("keydown", (evento) => {
         if (evento.key === "Enter") acoes.aoAbrir(dados);

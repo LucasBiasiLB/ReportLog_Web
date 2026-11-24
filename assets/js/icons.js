@@ -6,5 +6,7 @@ const ICONS = {
     mov:  '/ReportLog_Web/assets/icons/mov.png',
     mp:   '/ReportLog_Web/assets/icons/mp.png',
     set:  '/ReportLog_Web/assets/icons/set.png',
+    bug:  '/ReportLog_Web/assets/icons/bug.png',
+    outros: '/ReportLog_Web/assets/icons/logo.png',
     logo: '/ReportLog_Web/assets/icons/logo.png'
 };

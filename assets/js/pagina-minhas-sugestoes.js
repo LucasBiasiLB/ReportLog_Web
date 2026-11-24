@@ -13,10 +13,11 @@ const ROTULOS = {
     personagens:  "Personagens",
     interface:    "Interface",
     graficos:     "Gráficos",
+    bugs:         "BUGs",
     outros:       "Outros"
 };
-// Mesma ordem dos radios de ícone do formulário (1..5)
-const ICONE_ORDEM = ["atck", "def", "mov", "mp", "set"];
+// Mesma ordem dos radios de ícone do formulário (1..7)
+const ICONE_ORDEM = ["atck", "def", "mov", "mp", "set", "bug", "outros"];
 
 // Só as do usuário logado (admin vê também as dos outros? por enquanto: só as próprias)
 function minhasSugestoes() {
@@ -95,7 +96,7 @@ function abrirEdicao(d) {
     const chaveCategoria = Object.keys(ROTULOS).find((k) => ROTULOS[k] === d.categoria) || "outros";
     formEditar.querySelector(`input[name="categoria"][value="${chaveCategoria}"]`).checked = true;
 
-    // O ícone foi salvo pelo nome ("atck"...); o radio usa a posição (1..5)
+    // O ícone foi salvo pelo nome ("atck"...); o radio usa a posição (1..7)
     const posicaoIcone = ICONE_ORDEM.indexOf(d.icon ?? d.icone) + 1;
     formEditar.querySelector(`input[name="icone"][value="${posicaoIcone > 0 ? posicaoIcone : 1}"]`).checked = true;
 

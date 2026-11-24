@@ -195,7 +195,7 @@ formulario.addEventListener("submit", async (evento) => {
     if (!titulo || !descricao) return;             // campos vazios: ignora
 
     const rotulos = { jogabilidade: "Jogabilidade", personagens: "Personagens",
-                    interface: "Interface", graficos: "Gráficos", outros: "Outros" };
+                    interface: "Interface", graficos: "Gráficos", bugs: "BUGs", outros: "Outros" };
 
     botaoCarregando();
     try {
@@ -203,7 +203,7 @@ formulario.addEventListener("submit", async (evento) => {
             titulo,
             descricao,
             categoria: rotulos[f.get("categoria")],
-            icon: ["atck", "def", "mov", "mp", "set"][Number(f.get("icone")) - 1] || "logo"
+            icon: ["atck", "def", "mov", "mp", "set", "bug", "outros"][Number(f.get("icone")) - 1] || "logo"
         });
     } catch (e) {
         alert(e.message);
