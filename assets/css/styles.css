@@ -377,8 +377,8 @@ img {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 16px;
     padding: 10px 20px;
+    border: 1px solid var(--azul-claro);
     border-radius: 8px;
     background: var(--azul-botao);
     color: var(--branco);
@@ -1336,7 +1336,7 @@ img {
 
 /* Botão principal (usa .botao + .botao-largo que já existem) */
 .auth-entrar {
-    margin-top: 10px;
+    margin-top: 24px;
     padding: 14px 20px;
     border-radius: 12px;
     font-size: 0.875rem;
