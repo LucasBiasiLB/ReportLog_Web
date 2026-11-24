@@ -1202,6 +1202,10 @@ img {
     display: flex;
     flex-direction: column;
     padding: 0 32px;
+    background-image: url('../../assets/image/bg-login.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Topo: marca à esquerda, link à direita, linha embaixo */
