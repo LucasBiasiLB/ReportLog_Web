@@ -115,14 +115,13 @@ function CartaoSugestao(dados, acoes) {
     const corpo = el("div", "sugestao-corpo");
     const texto = el("div", "sugestao-texto");
     texto.append(el("h3", "", dados.titulo), el("p", "", dados.descricao));
-    const caixaIcone = el("div", "sugestao-icone");
+
     // dados.icon guarda o NOME ("atck", "def"...); ICONS traduz para o caminho da imagem
     const imgIcone = el("img", "icone-item");
     const chaveIcone = (dados.icon || "").replace("#", "");
     imgIcone.src = ICONS[chaveIcone] || "/ReportLog_Web/assets/icons/logo.png";
     imgIcone.alt = chaveIcone;
-    caixaIcone.append(imgIcone);
-    corpo.append(texto, caixaIcone);
+    corpo.append(texto, imgIcone);
 
     // Base: botão de curtir (+ excluir, só para o dono ou admin)
     const base = el("footer", "sugestao-base");

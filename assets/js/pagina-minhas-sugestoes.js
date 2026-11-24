@@ -127,15 +127,15 @@ formEditar.addEventListener("submit", async (evento) => {
     }
 
     const botaoSalvar = formEditar.querySelector('button[type="submit"]');
-    botaoSalvar.disabled = true;
+    const pronto = botaoCarregando(botaoSalvar, "Salvando");
     try {
         await editarSugestao(editandoId, dados);
         await recarregar();
         janelaEditar.close();
+        pronto();
     } catch (err) {
         alert(err.message);
-    } finally {
-        botaoSalvar.disabled = false;
+        pronto();
     }
 });
 

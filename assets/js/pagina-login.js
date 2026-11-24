@@ -14,11 +14,13 @@ if (formLogin) {
     formLogin.addEventListener("submit", async (e) => {
         e.preventDefault();
         const f = new FormData(formLogin);
+        const pronto = botaoCarregando(e.submitter || formLogin.querySelector('button[type="submit"]'), "Entrando");
         try {
             await enviarAuth({ acao: "login", email: f.get("email").trim(), senha: f.get("senha") });
             location.href = "index.html";
         } catch (err) {
             alert(err.message);
+            pronto();
         }
     });
 }
@@ -30,6 +32,7 @@ if (formCriar) {
         const f = new FormData(formCriar);
         if (f.get("senha") !== f.get("confirmar")) return alert("As senhas não são iguais");
         if (!f.get("termos")) return alert("Aceite os termos para continuar");
+        const pronto = botaoCarregando(e.submitter || formCriar.querySelector('button[type="submit"]'), "Criando conta");
         try {
             await enviarAuth({
                 acao: "registrar",
@@ -40,6 +43,7 @@ if (formCriar) {
             location.href = "index.html";
         } catch (err) {
             alert(err.message);
+            pronto();
         }
     });
 }
@@ -65,13 +69,16 @@ if (linkRecuperar && caixaRecuperar && formRecuperar) {
     formRecuperar.addEventListener("submit", async (e) => {
         e.preventDefault();
         const f = new FormData(formRecuperar);
+        const pronto = botaoCarregando(e.submitter || formRecuperar.querySelector('button[type="submit"]'), "Enviando");
         try {
             await enviarAuth({ acao: "recuperar", email: f.get("email").trim() });
             alert("Se este e-mail estiver cadastrado, você receberá um link para redefinir a senha.");
             formLogin.hidden = false;
             caixaRecuperar.hidden = true;
+            pronto();
         } catch (err) {
             alert(err.message);
+            pronto();
         }
     });
 }

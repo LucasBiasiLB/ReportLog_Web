@@ -45,6 +45,28 @@ function tirarRodinha(alvo) {
     alvo.querySelector(":scope > .carregando")?.remove();
 }
 
+/* ---------- BOTÃO COM RODINHA ----------
+   botaoCarregando(botao, "Salvando") troca o conteúdo do botão por uma
+   rodinha e devolve uma função para restaurar o botão quando terminar:
+     const pronto = botaoCarregando(botao, "Salvando");
+     try { await ... } finally { pronto(); } */
+function botaoCarregando(botao, rotulo) {
+    const html = botao.innerHTML;
+    botao.disabled = true;
+    botao.textContent = "";
+    const roda = document.createElement("span");
+    roda.className = "rodinha rodinha-botao";
+    roda.setAttribute("role", "status");
+    roda.setAttribute("aria-label", rotulo);
+    botao.append(roda);
+    botao.setAttribute("aria-busy", "true");
+    return function botaoPronto() {
+        botao.disabled = false;
+        botao.removeAttribute("aria-busy");
+        botao.innerHTML = html;
+    };
+}
+
 /* ---------- O CORAÇÃO DO SISTEMA ----------
    carregarComCache(chave, buscar, mostrar, alvo)
      chave   → nome do que está sendo guardado ("sugestoes", "updates", "usuario")

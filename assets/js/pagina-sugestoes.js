@@ -167,24 +167,6 @@ aplicar();   // deixa a bolinha do botão no estado certo ao abrir a página
 
 // Troca o conteúdo do botão por uma rodinha enquanto a sugestão é publicada
 const botaoPublicar = formulario.querySelector('button[type="submit"]');
-const htmlBotao = botaoPublicar.innerHTML;   // guarda o original (ícone + texto)
-
-function botaoCarregando() {
-    botaoPublicar.disabled = true;
-    botaoPublicar.textContent = "";
-    const roda = document.createElement("span");
-    roda.className = "rodinha rodinha-botao";
-    roda.setAttribute("role", "status");
-    roda.setAttribute("aria-label", "Publicando");
-    botaoPublicar.append(roda);
-    botaoPublicar.setAttribute("aria-busy", "true");
-}
-
-function botaoPronto() {
-    botaoPublicar.disabled = false;
-    botaoPublicar.removeAttribute("aria-busy");
-    botaoPublicar.innerHTML = htmlBotao;
-}
 
 // Formulário "Nova sugestão"
 formulario.addEventListener("submit", async (evento) => {
@@ -197,7 +179,7 @@ formulario.addEventListener("submit", async (evento) => {
     const rotulos = { jogabilidade: "Jogabilidade", personagens: "Personagens",
                     interface: "Interface", graficos: "Gráficos", bugs: "BUGs", outros: "Outros" };
 
-    botaoCarregando();
+    const pronto = botaoCarregando(botaoPublicar, "Publicando");
     try {
         await publicarSugestao({
             titulo,
@@ -209,7 +191,7 @@ formulario.addEventListener("submit", async (evento) => {
         alert(e.message);
         return;
     } finally {
-        botaoPronto();
+        pronto();
     }
 
     formulario.reset();
@@ -223,33 +205,15 @@ formulario.addEventListener("submit", async (evento) => {
 // Botão "atualizar": busca de novo no servidor e redesenha a lista.
 // Enquanto busca, o ícone vira a mesma rodinha usada no botão de publicar.
 const botaoRefresh = document.getElementById("btn-refresh");
-const htmlRefresh = botaoRefresh.innerHTML;
-
-function refreshCarregando() {
-    botaoRefresh.disabled = true;
-    botaoRefresh.innerHTML = "";
-    const roda = document.createElement("span");
-    roda.className = "rodinha rodinha-botao";
-    roda.setAttribute("role", "status");
-    roda.setAttribute("aria-label", "Atualizando");
-    botaoRefresh.append(roda);
-    botaoRefresh.setAttribute("aria-busy", "true");
-}
-
-function refreshPronto() {
-    botaoRefresh.disabled = false;
-    botaoRefresh.removeAttribute("aria-busy");
-    botaoRefresh.innerHTML = htmlRefresh;
-}
 
 botaoRefresh.addEventListener("click", async () => {
-    refreshCarregando();
+    const pronto = botaoCarregando(botaoRefresh, "Atualizando");
     try {
         await desenharLista();
     } catch (e) {
         alert(e.message);
     } finally {
-        refreshPronto();
+        pronto();
     }
 });
 

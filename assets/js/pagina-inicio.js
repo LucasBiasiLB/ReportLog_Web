@@ -138,7 +138,7 @@ function cartaoRascunho(d) {
 
     const publicar = el("button", "botao-contorno-pequeno", "Publicar");
     publicar.type = "button";
-    publicar.addEventListener("click", () => publicarRascunho(d));
+    publicar.addEventListener("click", (e) => publicarRascunho(d, e.currentTarget));
 
     const excluir = el("button", "botao-contorno-pequeno", "Excluir");
     excluir.type = "button";
@@ -202,8 +202,9 @@ function abrirRascunho(d) {
 }
 
 // Publica um rascunho direto da lista (sem abrir a janela)
-async function publicarRascunho(d) {
+async function publicarRascunho(d, botao) {
     if (!confirm('Publicar "' + (d.titulo || "update sem título") + '"?')) return;
+    const pronto = botaoCarregando(botao, "Publicando");
 
     const envio = new FormData();
     envio.append("status", "publicado");
@@ -221,10 +222,11 @@ async function publicarRascunho(d) {
 
     try {
         await enviarUpdateServidor(envio);
-        removerRascunho(d.id);
+        removerRascunho(d.id);   // o card some; não precisa restaurar o botão
         alert("Update publicado!");
     } catch (err) {
         alert(err.message);
+        pronto();
     }
 }
 
@@ -301,6 +303,7 @@ formularioUpdate.addEventListener("submit", async (evento) => {
 
     const botoes = formularioUpdate.querySelectorAll("button[type=submit]");
     botoes.forEach((b) => (b.disabled = true));
+    const pronto = botaoCarregando(evento.submitter || botoes[botoes.length - 1], "Publicando");
     try {
         await enviarUpdateServidor(envio);
         if (rascunhoAtual) removerRascunho(rascunhoAtual);   // publicou o rascunho que estava aberto
@@ -312,6 +315,7 @@ formularioUpdate.addEventListener("submit", async (evento) => {
     } catch (err) {
         alert(err.message);
     } finally {
+        pronto();
         botoes.forEach((b) => (b.disabled = false));
     }
 });

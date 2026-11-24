@@ -86,7 +86,7 @@ form.addEventListener("submit", async (e) => {
     if (voltarFotoPadrao) dados.append("padrao_foto", "1");
     if (voltarCapaPadrao) dados.append("padrao_banner", "1");
 
-    botaoSalvar.disabled = true;           // o envio das imagens pode levar alguns segundos
+    const pronto = botaoCarregando(botaoSalvar, "Salvando");   // o envio das imagens pode levar alguns segundos
     try {
         const r = await fetch(API_PERFIL, { method: "POST", body: dados });
         const resposta = await r.json();
@@ -96,6 +96,6 @@ form.addEventListener("submit", async (e) => {
         location.href = "usuario.html";
     } catch (err) {
         alert(err.message);
-        botaoSalvar.disabled = false;
+        pronto();
     }
 });
